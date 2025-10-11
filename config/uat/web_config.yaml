@@ -1,0 +1,24 @@
+# can be: local, remote, cloud
+driver:
+  type: remote
+
+browser:
+  name: chrome
+  version: 139
+
+app:
+  baseurl: "https://rahulshettyacademy.com/client/"
+  username: "tester_aqa_331@mail.com"
+  password: "Tester123."
+
+cloud:
+  os:
+    name: Windows
+    version: 11
+  username: ""
+  accessKey: ""
+  remoteUrl: "hub-cloud.browserstack.com/wd/hub"
+  session:
+    name: WebTestAutomation
+  build:
+    name: Test

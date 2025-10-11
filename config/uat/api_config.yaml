@@ -1,0 +1,3 @@
+# can be: local, container
+mock:
+  service: container
