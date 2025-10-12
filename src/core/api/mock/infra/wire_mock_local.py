@@ -26,6 +26,7 @@ class WireMockLocal(WireMockService):
     def start_wiremock(self):
         self.server.start()
         self._wait_for_admin()
+        logger.info("WireMock started locally.")
 
     def stop_wiremock(self):
         self.server.stop()
