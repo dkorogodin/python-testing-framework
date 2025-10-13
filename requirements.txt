@@ -10,6 +10,9 @@ allure-pytest==2.15.0
 requests==2.32.5
 wiremock==2.7.0
 
+# --- Web ---
+selenium==4.36.0
+
 # --- Testcontainers (to run MockServer in Docker automatically) ---
 testcontainers==4.13.2
 

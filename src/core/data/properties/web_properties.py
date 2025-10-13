@@ -17,6 +17,11 @@ class WebProperties:
         self.cloud_os_version = self.loader.get("cloud.os.version")
         self.cloud_username = self.loader.get("cloud.username")
         self.cloud_access_key = self.loader.get("cloud.accessKey")
-        self.cloud_remote_url = self.loader.get("cloud.remoteUrl")
+        self.cloud_remote_address = self.loader.get("cloud.remoteAddress")
         self.cloud_session_name = self.loader.get("cloud.session.name")
         self.cloud_build_name = self.loader.get("cloud.build.name")
+        self.remote_address = None
+
+    def set_remote_address(self, new_remote_address: str):
+        """Update the remote_address value."""
+        self.remote_address = new_remote_address

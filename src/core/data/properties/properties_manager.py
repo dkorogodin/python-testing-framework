@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 from typing import Optional, Callable, Any
 
@@ -16,20 +15,22 @@ class PropertiesManager:
         self.override_fn = override_fn
 
         # src/core/data/properties/properties_manager.py
-        self.project_root = Path(__file__).parent.parent.parent.parent.parent
+        self.project_root = Path(__file__).parents[4]
+        self.config_path = self.project_root / "data" / "config" / self.env
+
         self._api_properties: Optional[ApiProperties] = None
         self._web_properties: Optional[WebProperties] = None
 
     @property
     def api_properties(self) -> ApiProperties:
         if self._api_properties is None:
-            path = self.project_root / "config" / self.env / "api_config.yaml"
+            path = self.config_path / "api_config.yaml"
             self._api_properties = ApiProperties(path, self.override_fn)
         return self._api_properties
 
     @property
     def web_properties(self) -> WebProperties:
         if self._web_properties is None:
-            path = self.project_root / "config" / self.env / "web_config.yaml"
+            path = self.config_path / "web_config.yaml"
             self._web_properties = WebProperties(path, self.override_fn)
         return self._web_properties

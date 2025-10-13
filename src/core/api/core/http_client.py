@@ -1,5 +1,7 @@
 from typing import Optional, Dict, Any, Tuple
+
 import requests
+
 from src import logger
 
 
@@ -10,10 +12,10 @@ class HttpClient:
     """
 
     def __init__(
-        self,
-        base_url: str,
-        timeout: int = 10,
-        basic_auth: Optional[Tuple[str, str]] = None
+            self,
+            base_url: str,
+            timeout: int = 10,
+            basic_auth: Optional[Tuple[str, str]] = None
     ):
         self.base_url = base_url.rstrip("/")  # avoid double slashes
         self.timeout = timeout
@@ -39,12 +41,12 @@ class HttpClient:
         return self._request("DELETE", endpoint, headers=headers, params=params)
 
     def _request(
-        self,
-        method: str,
-        endpoint: str,
-        headers: Optional[Dict[str, str]] = None,
-        params: Optional[Dict[str, Any]] = None,
-        json: Optional[Dict[str, Any]] = None
+            self,
+            method: str,
+            endpoint: str,
+            headers: Optional[Dict[str, str]] = None,
+            params: Optional[Dict[str, Any]] = None,
+            json: Optional[Dict[str, Any]] = None
     ) -> requests.Response:
         url = self._build_url(endpoint)
 
@@ -57,7 +59,6 @@ class HttpClient:
             logger.info(f"Headers: {headers}")
         if self.basic_auth:
             logger.info(f"auth: {self.basic_auth}")
-
 
         try:
             response = requests.request(

@@ -2,7 +2,6 @@ from typing import cast
 
 from src.core.api.service.auth.auth_service import AuthService
 from src.core.api.service.auth.model.basic_auth import BasicAuth
-from src.core.api.service.auth.model.token import Token
 from src.core.api.service.auth.model.token_auth import TokenAuth
 from src.core.api.service.payment.payment_service import PaymentService
 from src.core.api.service.product.product_service import ProductService

@@ -17,7 +17,7 @@ cloud:
     version: 11
   username: ""
   accessKey: ""
-  remoteUrl: "hub-cloud.browserstack.com/wd/hub"
+  remoteAddress: "hub-cloud.browserstack.com/wd/hub"
   session:
     name: WebTestAutomation
   build:

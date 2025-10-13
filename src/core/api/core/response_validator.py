@@ -1,11 +1,8 @@
 import datetime
-import json
-from dataclasses import is_dataclass, asdict
 from typing import Any, List
 
 import allure
 from deepdiff import DeepDiff
-from pydantic import BaseModel
 
 from src import logger
 

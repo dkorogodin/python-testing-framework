@@ -1,4 +1,3 @@
-import os
 import time
 from pathlib import Path
 
@@ -18,7 +17,7 @@ class WireMockLocal(WireMockService):
         self.port = find_free_port()
 
         # src/core/api/mock/infra/wire_mock_local.py
-        self.project_root = Path(__file__).parent.parent.parent.parent.parent.parent
+        self.project_root = Path(__file__).parents[5]
 
         self.wiremock_standalone_jar = self.project_root / "wiremock" / "wiremock-standalone-3.13.1.jar"
         self.server = WireMockServer(port=self.port, jar_path=self.wiremock_standalone_jar, max_attempts=100)

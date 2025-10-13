@@ -48,6 +48,7 @@ class ConfigLoader:
         except (KeyError, TypeError):
             return default
 
+
 # ---------- Pytest CLI integration ----------
 
 def pytest_addoption(parser):

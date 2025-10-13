@@ -1,12 +1,11 @@
-# src/core/util/system/logger_config.py
 import logging
-from logging.handlers import TimedRotatingFileHandler
-from pathlib import Path
 import os
 from datetime import datetime
+from logging.handlers import TimedRotatingFileHandler
+from pathlib import Path
 
 # Logs directory at project root src/core/util/system/logger_config.py
-PROJECT_ROOT = Path(__file__).parent.parent.parent.parent.parent
+PROJECT_ROOT = Path(__file__).parents[4]
 
 LOG_DIR = PROJECT_ROOT / "logs"
 LOG_DIR.mkdir(parents=True, exist_ok=True)
@@ -19,6 +18,7 @@ formatter = logging.Formatter(
 
 # Current log file
 current_log_file = LOG_DIR / "currentLogFile.log"
+
 
 # Daily rotating + size rotation
 class DailySizeRotatingHandler(TimedRotatingFileHandler):
@@ -37,6 +37,7 @@ class DailySizeRotatingHandler(TimedRotatingFileHandler):
         self.stream.close()
         os.rename(self.baseFilename, date_dir / f"logFile-{date_str}-{i}.log")
         self.stream = self._open()
+
 
 # Central function to configure logger
 def configure_logger(name: str) -> logging.Logger:
