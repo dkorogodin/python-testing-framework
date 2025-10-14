@@ -2,12 +2,12 @@ from wiremock.testing.testcontainer import WireMockContainer
 
 from src import logger
 from src.core.api.mock.infra.wiremock_service import WireMockService
-from src.core.data.properties.properties_manager import PropertiesManager
+from src.core.data.configs.configs_manager import ConfigsManager
 
 
 class WireMockTestContainer(WireMockService):
-    def __init__(self, properties_manager: PropertiesManager):
-        super().__init__(properties_manager)
+    def __init__(self, configs_manager: ConfigsManager):
+        super().__init__(configs_manager)
         self.container = WireMockContainer(secure=False)
         self.host = None
         self.port = None

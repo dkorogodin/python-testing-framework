@@ -8,3 +8,7 @@ class ShippingInfo(BaseModel):
     """
     email: str
     country: str
+
+    model_config = {
+        "from_attributes": True  # Enables parsing from SQLAlchemy objects
+    }

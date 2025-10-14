@@ -4,7 +4,7 @@ from typing import Optional, Callable, Any
 from src.core.util.system.config_loader_util import ConfigLoader
 
 
-class WebProperties:
+class WebConfigs:
     def __init__(self, file_path: Path, override_fn: Optional[Callable[[str], Any]] = None):
         self.loader = ConfigLoader(file_path, override_fn)
         self.driver_type = self.loader.get("driver.type")

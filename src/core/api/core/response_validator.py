@@ -3,6 +3,7 @@ from typing import Any, List
 
 import allure
 from deepdiff import DeepDiff
+from pydantic import BaseModel
 
 from src import logger
 
@@ -34,7 +35,17 @@ class ApiResponseValidator:
     @allure.step("Verify that response body is equal to expected object")
     def body_is_equal_to(self, expected_body: Any) -> "ApiResponseValidator":
         actual_body = self.response.response.json()
-        diff = DeepDiff(self.make_serializable(expected_body.dict()), actual_body, ignore_order=True)
+
+        if isinstance(expected_body, BaseModel):
+            expected_dict = (
+                expected_body.model_dump()
+                if hasattr(expected_body, "model_dump")
+                else expected_body.dict()
+            )
+        else:
+            expected_dict = expected_body
+
+        diff = DeepDiff(self.make_serializable(expected_dict), actual_body, ignore_order=True)
         if diff:
             logger.error("Response body mismatch:\n%s", diff.pretty())
         else:

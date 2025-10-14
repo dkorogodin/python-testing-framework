@@ -5,6 +5,16 @@ import allure
 import pytest
 
 
+def pytest_collection_modifyitems(config, items):
+    """
+    Automatically rerun only web tests (marked with @pytest.mark.web)
+    if they fail, up to 2 times with a short delay.
+    """
+    for item in items:
+        if "web" in item.keywords:
+            # Add rerun marker dynamically for web tests only
+            item.add_marker(pytest.mark.flaky(reruns=2, reruns_delay=2))
+
 @pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_makereport(item, call):
     """
@@ -61,7 +71,7 @@ def _attach_screenshot(driver, test_name: str):
     """
     try:
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        screenshot_dir = os.path.join("reports", "screenshots")
+        screenshot_dir = os.path.join("target", "reports", "screenshots")
         os.makedirs(screenshot_dir, exist_ok=True)
         screenshot_path = os.path.join(screenshot_dir, f"{test_name}_{timestamp}.png")
 

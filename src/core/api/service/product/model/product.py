@@ -13,3 +13,7 @@ class Product(BaseModel):
     price: int
     details: Optional[str] = None
     currency: str = "$"
+
+    model_config = {
+        "from_attributes": True  # Enables parsing from SQLAlchemy objects
+    }

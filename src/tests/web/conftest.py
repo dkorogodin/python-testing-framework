@@ -1,75 +1,73 @@
-import os
-from pathlib import Path
-
 import pytest
 
-from src.core.data.properties.properties_manager import PropertiesManager
-from src.core.web.driver.driver_type import DriverType
+from src.core.api.mock.infra.wire_mock_factory import WireMockServiceFactory
+from src.core.api.service.service_manager import ApiMicroServiceManager
+from src.core.db.core.config import DbConfig
+from src.core.db.core.db_pool import DbPool
+from src.core.db.infra.db_test_container import DbTestContainer
 from src.core.web.infra.selenium_grid_test_container import SeleniumGridTestContainer
 from src.core.web.manager.web_app_lifecycle import WebAppLifecycle
 from src.core.web.pageobject.page_navigator import PageNavigator
 
 
-def pytest_configure(config):
-    # src/tests/web/conftest.py
-    project_root = Path(__file__).parents[3]
-    allure_dir = project_root / "reports" / "allure-results"
-    os.makedirs(allure_dir, exist_ok=True)
-    config.option.allure_report_dir = allure_dir
-
-
 @pytest.fixture(scope="session")
-def properties_manager():
-    return PropertiesManager()
-
-
-@pytest.fixture(scope="session")
-def selenium_grid(properties_manager):
-    props = properties_manager.web_properties
+def selenium_grid(configs_manager):
+    props = configs_manager.web_configs
     container = None
     if props.driver_type.lower() == "remote":
-        container = SeleniumGridTestContainer(props.browser_name)
+        container = SeleniumGridTestContainer(props)
     yield container
     if container:
         container.shutdown()
 
 
 @pytest.fixture(scope="session")
-def web_app_lifecycle(properties_manager, selenium_grid):
-    _set_remote_address(properties_manager, selenium_grid)
-    lifecycle = WebAppLifecycle(properties_manager.web_properties)
+def wiremock_service(configs_manager):
+    service = WireMockServiceFactory.get_wiremock_service(configs_manager)
+    service.start()
+    yield service
+    service.shutdown()
+
+
+@pytest.fixture(scope="session")
+def payment_db_pool(configs_manager):
+    payment = DbTestContainer(configs_manager.payments_db_configs, DbTestContainer.INIT_PAYMENT_DB_TEST_DATA_PATH)
+    pool = DbPool(DbConfig(payment), max_pool_size=5)
+    yield pool
+    payment.shutdown()
+
+
+@pytest.fixture(scope="session")
+def product_db_pool(configs_manager):
+    product = DbTestContainer(configs_manager.products_db_configs, DbTestContainer.INIT_PRODUCT_DB_TEST_DATA_PATH)
+    pool = DbPool(DbConfig(product), max_pool_size=5)
+    yield pool
+    product.shutdown()
+
+
+@pytest.fixture(scope="session")
+def api_service_manager(configs_manager, wiremock_service):
+    return ApiMicroServiceManager(configs_manager, wiremock_service.get_url())
+
+
+@pytest.fixture
+def web_app_lifecycle(configs_manager, selenium_grid):
+    lifecycle = WebAppLifecycle(configs_manager.web_configs)
     yield lifecycle
     lifecycle.close_browser()
 
 
 @pytest.fixture
-def login_page(web_app_lifecycle, properties_manager):
+def login_page(web_app_lifecycle, configs_manager):
     driver = web_app_lifecycle.get_driver()
-    page_navigator = PageNavigator(driver, properties_manager.web_properties)
-    yield page_navigator.goto_login_page()
-    web_app_lifecycle.restart_browser()
+    page_navigator = PageNavigator(driver, configs_manager.web_configs)
+    return page_navigator.goto_login_page()
 
 
 @pytest.fixture
-def home_page(login_page, properties_manager):
-    props = properties_manager.web_properties
+def home_page(login_page, configs_manager):
+    props = configs_manager.web_configs
     return login_page.login_then_goto_home_page(
         props.web_username,
         props.web_password
     )
-
-
-def _set_remote_address(properties_manager, selenium_grid):
-    """
-    Sets the remote address for the web driver based on the configured driver type.
-    """
-    web_props = properties_manager.web_properties
-    driver_type = DriverType.from_property(web_props.driver_type)
-
-    if driver_type == DriverType.REMOTE:
-        web_props.remote_address = selenium_grid.hub_url
-    elif driver_type == DriverType.CLOUD:
-        cloud_url = f"https://{web_props.cloud_username}:{web_props.cloud_access_key}@{web_props.cloud_remote_url}"
-        web_props.remote_address = cloud_url
-    else:
-        pass

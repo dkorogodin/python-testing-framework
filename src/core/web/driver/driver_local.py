@@ -2,16 +2,16 @@ from selenium import webdriver
 from selenium.webdriver import ChromeOptions, Remote
 
 from src import logger
-from src.core.data.properties.web_properties import WebProperties
+from src.core.data.configs.web_configs import WebConfigs
 from src.core.util.platformshared.driver import Driver
 
 
 class DriverLocal(Driver):
-    def __init__(self, properties: WebProperties):
-        self.properties = properties
+    def __init__(self, configs: WebConfigs):
+        self.configs = configs
 
     def initiate_driver(self) -> Remote:
-        browser = self.properties.browser_name
+        browser = self.configs.browser_name
         logger.info(f"Initializing local WebDriver: {browser}")
 
         if browser in ["chrome", "chromeheadless"]:

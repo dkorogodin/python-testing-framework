@@ -1,0 +1,53 @@
+from pathlib import Path
+from typing import Optional, Callable, Any
+
+from src.core.data.configs.api_configs import ApiConfigs
+from src.core.data.configs.db_configs import DbConfigs
+from src.core.data.configs.web_configs import WebConfigs
+
+
+class ConfigsManager:
+    """
+    Central manager for loading API and Web configs.
+    """
+
+    def __init__(self, env: str = "dev", override_fn: Optional[Callable[[str], Any]] = None):
+        self.env = env
+        self.override_fn = override_fn
+
+        # src/core/data/configs/configs_manager.py
+        self.project_root = Path(__file__).parents[4]
+        self.config_path = self.project_root / "data" / "config" / self.env
+
+        self._api_configs: Optional[ApiConfigs] = None
+        self._web_configs: Optional[WebConfigs] = None
+        self._payments_db_configs: Optional[DbConfigs] = None
+        self._products_db_configs: Optional[DbConfigs] = None
+
+    @property
+    def api_configs(self) -> ApiConfigs:
+        if self._api_configs is None:
+            path = self.config_path / "api_config.yaml"
+            self._api_configs = ApiConfigs(path, self.override_fn)
+        return self._api_configs
+
+    @property
+    def web_configs(self) -> WebConfigs:
+        if self._web_configs is None:
+            path = self.config_path / "web_config.yaml"
+            self._web_configs = WebConfigs(path, self.override_fn)
+        return self._web_configs
+
+    @property
+    def payments_db_configs(self) -> DbConfigs:
+        if self._payments_db_configs is None:
+            path = self.config_path / "db" / "payments_db_config.yaml"
+            self._payments_db_configs = DbConfigs(path, self.override_fn)
+        return self._payments_db_configs
+
+    @property
+    def products_db_configs(self) -> DbConfigs:
+        if self._products_db_configs is None:
+            path = self.config_path / "db" / "products_db_config.yaml"
+            self._products_db_configs = DbConfigs(path, self.override_fn)
+        return self._products_db_configs

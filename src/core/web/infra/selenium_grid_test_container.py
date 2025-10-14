@@ -4,14 +4,16 @@ import time
 import requests
 from testcontainers.core.container import DockerContainer
 
+from src.core.data.configs.web_configs import WebConfigs
+
 logger = logging.getLogger(__name__)
 
 
 class SeleniumGridTestContainer:
     """Manages standalone Selenium containers for browser automation tests."""
 
-    def __init__(self, browser_name: str):
-        self.browser_name = browser_name.lower()
+    def __init__(self, web_props: WebConfigs):
+        self.browser_name = web_props.browser_name.lower()
         self.container: DockerContainer | None = None
 
         docker_image = self._get_docker_image()
@@ -30,6 +32,7 @@ class SeleniumGridTestContainer:
         port = self.container.get_exposed_port(4444)
         self.hub_url = f"http://{host}:{port}/wd/hub"
         self._wait_for_grid(self.hub_url)
+        web_props.remote_address = self.hub_url
 
         logger.info(
             "Selenium container with '%s' docker image started at '%s'", docker_image, self.hub_url

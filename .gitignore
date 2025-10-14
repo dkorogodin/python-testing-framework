@@ -24,7 +24,7 @@ dist/
 *.log
 
 # Reports
-reports/
+target/
 
 # MacOS
 .DS_Store

@@ -1,6 +1,10 @@
 # --- Testing framework ---
 pytest==8.4.2
 pytest-xdist==3.8.0
+pytest-rerunfailures==16.1
+
+# --- Web ---
+selenium==4.36.0
 
 # --- Reporting ---
 allure-python-commons==2.15.0
@@ -10,8 +14,10 @@ allure-pytest==2.15.0
 requests==2.32.5
 wiremock==2.7.0
 
-# --- Web ---
-selenium==4.36.0
+# --- DB ---
+mysql-connector-python==9.4.0
+SQLAlchemy==2.0.44
+PyMySQL==1.1.2
 
 # --- Testcontainers (to run MockServer in Docker automatically) ---
 testcontainers==4.13.2
@@ -21,5 +27,5 @@ pyyaml==6.0.3
 jsonschema==4.25.1
 deepdiff==8.6.1
 jsonpath-ng==1.7.0
-pydantic==2.12.0
+pydantic==2.12.1
 docker==7.1.0

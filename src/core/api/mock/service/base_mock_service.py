@@ -68,7 +68,7 @@ class BaseMockService(ABC):
 
     def make_serializable(self, obj):
         if isinstance(obj, BaseModel):
-            return json.loads(obj.json())
+            return json.loads(obj.model_dump_json())
         elif is_dataclass(obj):
             return json.loads(json.dumps(asdict(obj), default=str))
         else:

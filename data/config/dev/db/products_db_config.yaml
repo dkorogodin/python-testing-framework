@@ -1,0 +1,4 @@
+db:
+  name: productdb
+  username: user
+  password: password

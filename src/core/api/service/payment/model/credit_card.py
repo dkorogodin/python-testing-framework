@@ -12,3 +12,7 @@ class CreditCard(BaseModel):
     expiry_date: date
     cvv: str
     name_on_card: str
+
+    model_config = {
+        "from_attributes": True  # Enables parsing from SQLAlchemy objects
+    }

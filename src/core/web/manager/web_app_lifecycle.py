@@ -2,7 +2,7 @@ import allure
 from selenium.webdriver import Remote
 
 from src import logger
-from src.core.data.properties.web_properties import WebProperties
+from src.core.data.configs.web_configs import WebConfigs
 from src.core.util.system.retry_util import RetryUtil
 from src.core.web.driver.driver_factory import DriverFactory
 
@@ -10,8 +10,8 @@ from src.core.web.driver.driver_factory import DriverFactory
 class WebAppLifecycle:
     """Manages the lifecycle of a web application session (browser)."""
 
-    def __init__(self, properties: WebProperties):
-        self._properties = properties
+    def __init__(self, configs: WebConfigs):
+        self._configs = configs
         self._driver: Remote | None = None
 
     def get_driver(self) -> Remote:
@@ -31,7 +31,7 @@ class WebAppLifecycle:
     def close_browser(self):
         """Closes the browser if it's currently running."""
         if self._driver:
-            logger.info(f"Closing '{self._properties.browser_name}' browser.")
+            logger.info(f"Closing '{self._configs.browser_name}' browser.")
             try:
                 self._driver.quit()
             except Exception as e:
@@ -51,6 +51,6 @@ class WebAppLifecycle:
 
     def _initiate_driver(self):
         """Initiates the WebDriver with retry logic."""
-        factory = DriverFactory(self._properties)
+        factory = DriverFactory(self._configs)
         self._driver = RetryUtil.retry(factory.initiate_driver, retries=3, delay=1)
         self.maximize_browser_window()

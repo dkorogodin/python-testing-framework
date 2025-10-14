@@ -1,0 +1,4 @@
+db:
+  name: paymentdb
+  username: user
+  password: password

@@ -1,18 +1,18 @@
 from selenium.webdriver import ChromeOptions, FirefoxOptions, Remote
 
 from src import logger
-from src.core.data.properties.web_properties import WebProperties
+from src.core.data.configs.web_configs import WebConfigs
 from src.core.util.platformshared.driver import Driver
 
 
 class DriverRemote(Driver):
-    def __init__(self, properties: WebProperties):
-        self.properties = properties
+    def __init__(self, configs: WebConfigs):
+        self.configs = configs
 
     def initiate_driver(self) -> Remote:
         logger.info("Initializing RemoteWebDriver...")
 
-        browser = self.properties.browser_name.lower()
+        browser = self.configs.browser_name.lower()
 
         if browser == "chrome":
             options = ChromeOptions()
@@ -23,9 +23,9 @@ class DriverRemote(Driver):
             options = ChromeOptions()
 
         driver = Remote(
-            command_executor=self.properties.remote_address,
+            command_executor=self.configs.remote_address,
             options=options
         )
 
-        logger.info(f"RemoteWebDriver initialized for browser '{browser}' at {self.properties.remote_address}")
+        logger.info(f"RemoteWebDriver initialized for browser '{browser}' at {self.configs.remote_address}")
         return driver

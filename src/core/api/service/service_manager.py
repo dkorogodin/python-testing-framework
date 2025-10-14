@@ -5,12 +5,12 @@ from src.core.api.service.auth.model.basic_auth import BasicAuth
 from src.core.api.service.auth.model.token_auth import TokenAuth
 from src.core.api.service.payment.payment_service import PaymentService
 from src.core.api.service.product.product_service import ProductService
+from src.core.data.configs.configs_manager import ConfigsManager
 from src.core.data.factory.auth.auth.api_auth_factory import ApiAuthFactory
 from src.core.data.factory.auth.auth.basic_auth_data_builder import BasicAuthDataBuilder
 from src.core.data.factory.auth.auth.token_auth_api_data_builder import TokenAuthApiDataBuilder
 from src.core.data.factory.auth.token.api_auth_token_factory import ApiAuthTokenFactory
 from src.core.data.factory.auth.token.token_api_data_builder import TokenApiDataBuilder
-from src.core.data.properties.properties_manager import PropertiesManager
 
 
 class ApiMicroServiceManager:
@@ -21,13 +21,13 @@ class ApiMicroServiceManager:
     for authentication, payments, and products.
     """
 
-    def __init__(self, properties_manager: PropertiesManager, base_url: str, timeout: int = 10):
+    def __init__(self, configs_manager: ConfigsManager, base_url: str, timeout: int = 10):
         self.base_url = base_url.rstrip("/")
         self.timeout = timeout
 
-        web_properties = properties_manager.web_properties
-        self.user_name = web_properties.web_username
-        self.password = web_properties.web_password
+        web_configs = configs_manager.web_configs
+        self.user_name = web_configs.web_username
+        self.password = web_configs.web_password
 
     def get_payment_service(self) -> PaymentService:
         """

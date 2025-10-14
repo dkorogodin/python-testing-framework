@@ -1,17 +1,20 @@
 from selenium.webdriver import ChromeOptions, FirefoxOptions, Remote
 
 from src import logger
-from src.core.data.properties.web_properties import WebProperties
+from src.core.data.configs.web_configs import WebConfigs
 from src.core.util.platformshared.driver import Driver
 
 
 class DriverCloud(Driver):
-    def __init__(self, properties: WebProperties):
-        self.properties = properties
+    def __init__(self, configs: WebConfigs):
+        self.configs = configs
 
     def initiate_driver(self) -> Remote:
         logger.info("Initializing Cloud RemoteWebDriver...")
-        browser = self.properties.browser_name.lower()
+        cloud_url = f"https://{self.configs.cloud_username}:{self.configs.cloud_access_key}@{self.configs.cloud_remote_address}"
+        self.configs.remote_address = cloud_url
+
+        browser = self.configs.browser_name.lower()
         if browser == "chrome":
             options = ChromeOptions()
         elif browser == "firefox":
@@ -21,18 +24,18 @@ class DriverCloud(Driver):
             options = ChromeOptions()
 
         # Add BrowserStack or cloud service capabilities
-        options.set_capability("browserVersion", self.properties.browser_version)
+        options.set_capability("browserVersion", self.configs.browser_version)
         options.set_capability("bstack:options", {
-            "os": self.properties.cloud_os_name,
-            "osVersion": self.properties.cloud_os_version,
-            "sessionName": self.properties.cloud_session_name,
-            "buildName": self.properties.cloud_build_name
+            "os": self.configs.cloud_os_name,
+            "osVersion": self.configs.cloud_os_version,
+            "sessionName": self.configs.cloud_session_name,
+            "buildName": self.configs.cloud_build_name
         })
 
         driver = Remote(
-            command_executor=self.properties.remote_address,
+            command_executor=self.configs.remote_address,
             options=options
         )
 
-        logger.info(f"Cloud RemoteWebDriver initialized at {self.properties.cloud_remote_address}")
+        logger.info(f"Cloud RemoteWebDriver initialized at {self.configs.cloud_remote_address}")
         return driver

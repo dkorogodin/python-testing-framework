@@ -6,20 +6,20 @@ from wiremock.server import WireMockServer
 
 from src import logger
 from src.core.api.mock.infra.wiremock_service import WireMockService
-from src.core.data.properties.properties_manager import PropertiesManager
+from src.core.data.configs.configs_manager import ConfigsManager
 from src.core.util.system.port_util import find_free_port
 
 
 class WireMockLocal(WireMockService):
-    def __init__(self, properties_manager: PropertiesManager, host: str = "localhost"):
-        super().__init__(properties_manager)
+    def __init__(self, configs_manager: ConfigsManager, host: str = "localhost"):
+        super().__init__(configs_manager)
         self.host = host
         self.port = find_free_port()
 
         # src/core/api/mock/infra/wire_mock_local.py
         self.project_root = Path(__file__).parents[5]
 
-        self.wiremock_standalone_jar = self.project_root / "wiremock" / "wiremock-standalone-3.13.1.jar"
+        self.wiremock_standalone_jar = self.project_root / "data" / "wiremock" / "wiremock-standalone-3.13.1.jar"
         self.server = WireMockServer(port=self.port, jar_path=self.wiremock_standalone_jar, max_attempts=100)
 
     def start_wiremock(self):

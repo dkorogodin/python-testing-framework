@@ -8,19 +8,19 @@ from src.core.api.mock.service.mock_payment_service import MockPaymentService
 from src.core.api.mock.service.mock_product_service import MockProductService
 from src.core.api.service.auth.model.basic_auth import BasicAuth
 from src.core.api.service.auth.model.token_auth import TokenAuth
+from src.core.data.configs.configs_manager import ConfigsManager
 from src.core.data.factory.auth.auth.api_auth_factory import ApiAuthFactory
 from src.core.data.factory.auth.auth.basic_auth_data_builder import BasicAuthDataBuilder
 from src.core.data.factory.auth.auth.token_auth_constant_data_builder import TokenAuthConstantDataBuilder
 from src.core.data.factory.auth.token.api_auth_token_factory import ApiAuthTokenFactory
 from src.core.data.factory.auth.token.token_constant_data_builder import TokenConstantDataBuilder
-from src.core.data.properties.properties_manager import PropertiesManager
 
 
 class WireMockService(ABC):
     """ Base class for WireMock services (local or containerized). Manages server lifecycle and initialization of mock endpoints. """
 
-    def __init__(self, properties_manager: PropertiesManager):
-        self.properties_manager = properties_manager
+    def __init__(self, configs_manager: ConfigsManager):
+        self.configs_manager = configs_manager
         self.mock_services: List = []
         self.server = None
         self.url = None
@@ -57,8 +57,8 @@ class WireMockService(ABC):
         return self.url
 
     def _collect_all_mock_services(self):
-        username = self.properties_manager.web_properties.web_username
-        password = self.properties_manager.web_properties.web_password
+        username = self.configs_manager.web_configs.web_username
+        password = self.configs_manager.web_configs.web_password
 
         auth_service = MockAuthService(self.url, username)
 
