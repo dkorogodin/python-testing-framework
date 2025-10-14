@@ -20,7 +20,7 @@ class CartPageAssertions(BasePageAssertions):
         super().__init__(page)
         self.page = page  # keep IDE type support
 
-    @allure.step("Verify {expected_product}' product added to cart.")
+    @allure.step("Verify '{1}' product added to cart.")
     def has_added_product(self, expected_product: Product) -> "CartPageAssertions":
         """
         Verifies that a specific product has been added to the cart.

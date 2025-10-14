@@ -21,7 +21,7 @@ class ApiResponseValidator:
             getattr(self.response, 'get_status_code', lambda: 'unknown')()
         )
 
-    @allure.step("Verify that status code is equal to {expected_status}")
+    @allure.step("Verify that status code is equal to '{1}'")
     def status_code_is_equal_to(self, expected_status: int) -> "ApiResponseValidator":
         actual_status = self.response.get_status_code()
         logger.info("Validating status code: expected=%s, actual=%s", expected_status, actual_status)
@@ -42,14 +42,14 @@ class ApiResponseValidator:
         assert not diff, f"Body mismatch:\n{diff.pretty()}"
         return self
 
-    @allure.step("Verify that field {path} is equal to expected value")
+    @allure.step("Verify that field '{2}' is equal to expected value")
     def body_field_is_equal_to(self, expected_value: Any, path: str) -> "ApiResponseValidator":
         actual_value = self.response.get_field(path)
         logger.info("Validating field '%s': expected=%s, actual=%s", path, expected_value, actual_value)
         assert actual_value == expected_value, f"Expected {path} = {expected_value}, but got {actual_value}"
         return self
 
-    @allure.step("Verify that field {path} is not empty")
+    @allure.step("Verify that field '{1}' is not empty")
     def body_field_is_not_empty(self, path: str) -> "ApiResponseValidator":
         actual_value = self.response.get_field(path)
         logger.info("Validating non-empty field '%s': value=%s", path, actual_value)
@@ -57,7 +57,7 @@ class ApiResponseValidator:
             f"Expected field '{path}' to be non-empty, but got '{actual_value}'"
         return self
 
-    @allure.step("Verify that list at {path} equals expected items")
+    @allure.step("Verify that list at '{2}' equals expected items")
     def body_list_is_equal_to(self, expected_items: List[Any], path: str) -> "ApiResponseValidator":
         actual_items = self.response.get_fields(path)
         diff = DeepDiff(self.make_serializable(expected_items.dict()), actual_items, ignore_order=True)
@@ -68,7 +68,7 @@ class ApiResponseValidator:
         assert not diff, f"List mismatch at {path}:\n{diff.pretty()}"
         return self
 
-    @allure.step("Verify that list at {path} contains expected items")
+    @allure.step("Verify that list at '{2}' contains expected items")
     def body_list_contains(self, expected_items: List[Any], path: str) -> "ApiResponseValidator":
         actual_items = self.response.get_fields(path)
         missing_items = [item for item in expected_items if item not in actual_items]

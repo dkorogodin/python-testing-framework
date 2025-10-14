@@ -13,7 +13,7 @@ class HomePage(WebBaseLoggedInPage):
     PRODUCTS_LIST = (By.CSS_SELECTOR, ".card .card-body")
     SPINNER = (By.CLASS_NAME, "ngx-spinner-overlay")
 
-    @allure.step("Add '{product}' product to cart.")
+    @allure.step("Add '{1}' product to cart.")
     def add_product_to_cart(self, product: Product) -> "HomePage":
         """
         Adds a product to the cart.

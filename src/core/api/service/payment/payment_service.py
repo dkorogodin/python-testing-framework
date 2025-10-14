@@ -25,7 +25,7 @@ class PaymentService:
         self.payment_controller = PaymentController(base_url=base_url, auth=auth, timeout=timeout)
         self.payments_controller = PaymentsController(base_url=base_url, auth=auth, timeout=timeout)
 
-    @allure.step("Retrieve a specific payment by ID")
+    @allure.step("Retrieve a specific payment by ID '{1}'")
     def fetch_payment_by_id(self, payment_id: int) -> "PaymentService":
         """
         Retrieve a specific payment by its ID.
@@ -34,7 +34,7 @@ class PaymentService:
         self.response = self.payment_controller.fetch_payment_by_id(payment_id)
         return self
 
-    @allure.step("Delete a specific payment by ID")
+    @allure.step("Delete a specific payment by ID '{1}'")
     def remove_payment_by_id(self, payment_id: int) -> "PaymentService":
         """
         Delete a specific payment by its ID.

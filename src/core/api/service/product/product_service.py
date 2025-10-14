@@ -25,7 +25,7 @@ class ProductService:
         self.product_controller = ProductController(base_url=base_url, auth=auth, timeout=timeout)
         self.products_controller = ProductsController(base_url=base_url, auth=auth, timeout=timeout)
 
-    @allure.step("Retrieve a specific product by ID")
+    @allure.step("Retrieve a specific product by ID '{1}'")
     def fetch_product_by_id(self, product_id: int) -> "ProductService":
         """
         Retrieve a specific product by its ID.

@@ -1,3 +1,6 @@
+import os
+from pathlib import Path
+
 import pytest
 
 from src.core.data.properties.properties_manager import PropertiesManager
@@ -5,6 +8,14 @@ from src.core.web.driver.driver_type import DriverType
 from src.core.web.infra.selenium_grid_test_container import SeleniumGridTestContainer
 from src.core.web.manager.web_app_lifecycle import WebAppLifecycle
 from src.core.web.pageobject.page_navigator import PageNavigator
+
+
+def pytest_configure(config):
+    # src/tests/web/conftest.py
+    project_root = Path(__file__).parents[3]
+    allure_dir = project_root / "reports" / "allure-results"
+    os.makedirs(allure_dir, exist_ok=True)
+    config.option.allure_report_dir = allure_dir
 
 
 @pytest.fixture(scope="session")

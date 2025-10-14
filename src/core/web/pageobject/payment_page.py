@@ -25,14 +25,14 @@ class PaymentPage(WebBaseLoggedInPage):
     PLACE_ORDER_BTN = (By.XPATH, "//a[text()='Place Order ']")
     SHIPPING_INFO_COUNTRY_MENU_ITEMS = (By.XPATH, "//div[contains(@class,'user__name')]//section//span")
 
-    @allure.step("Fill in all payment details: '{payment}'.")
+    @allure.step("Fill in all payment details: '{1}'.")
     def fill_in_all_payment_details(self, payment: Payment) -> "PaymentPage":
         self.fill_in_credit_card(payment.credit_card)
         self.apply_coupon(payment.coupon)
         self.fill_in_shipping_info(payment.shipping_info)
         return self
 
-    @allure.step("Fill in credit card data: '{credit_card}'.")
+    @allure.step("Fill in credit card data: '{1}'.")
     def fill_in_credit_card(self, credit_card: CreditCard) -> "PaymentPage":
         logger.info(f"Fill in '{credit_card}' credit card data.")
         self._fill_in_credit_card_number(credit_card.number)
@@ -41,14 +41,14 @@ class PaymentPage(WebBaseLoggedInPage):
         self.element_actions.clear_field_then_type_text(self.NAME_ON_CARD_FLD, credit_card.name_on_card)
         return self
 
-    @allure.step("Fill in Shipping Info data: '{shipping_info}'.")
+    @allure.step("Fill in Shipping Info data: '{1}'.")
     def fill_in_shipping_info(self, shipping_info: ShippingInfo) -> "PaymentPage":
         logger.info(f"Fill in '{shipping_info}' Shipping Info data.")
         self._fill_in_shipping_info_email(shipping_info.email)
         self._fill_in_shipping_info_country(shipping_info.country)
         return self
 
-    @allure.step("Apply coupon: '{coupon}'.")
+    @allure.step("Apply coupon: '{1}'.")
     def apply_coupon(self, coupon: str | None) -> "PaymentPage":
         if coupon:
             logger.info(f"Apply '{coupon}' coupon.")

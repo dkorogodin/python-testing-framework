@@ -13,7 +13,7 @@ class CartPage(WebBaseLoggedInPage):
     CHECKOUT_BTN = (By.XPATH, "//button[text()='Checkout']")
     PRODUCTS_LIST = (By.CSS_SELECTOR, ".cart .cartWrap")
 
-    @allure.step("Find '{expected_product}' product.")
+    @allure.step("Find '{1}' product.")
     def find_product(self, expected_product: Product) -> Product:
         """
         Finds the given product in the cart.

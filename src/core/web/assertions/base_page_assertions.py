@@ -14,7 +14,7 @@ class BasePageAssertions:
     def __init__(self, page: WebBasePage):
         self.page = page
 
-    @allure.step("Verify toast msg is equal to '{expected_text}'.")
+    @allure.step("Verify toast msg is equal to '{1}'.")
     def shows_toast_msg(self, expected_text: str) -> "BasePageAssertions":
         """
         Verifies that a toast message is equal to the expected text.
