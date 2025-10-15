@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-# src/core/web/data/dataprovider/invalid_login_data_provider.py
+# src/core/web/data/dataprovider/login_data_provider.py
 DATA_PATH = Path(__file__).resolve().parents[5] / "data/test_data/web/json"
 
 

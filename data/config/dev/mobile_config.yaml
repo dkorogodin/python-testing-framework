@@ -1,0 +1,56 @@
+##########################################################
+# COMMON PROPERTIES
+##########################################################
+common:
+  platform: android          # android | ios
+  isCloud: false
+  isVideoRecorded: false
+
+##########################################################
+# LOCAL PROPERTIES
+##########################################################
+local:
+  appiumService:
+    type: local           # local | container (it's better not to use container, there are a lot of bugs now here)
+  android:
+    device:
+      udid: emulator-5554
+      platformVersion: "16"
+    app: Android-SauceLabs.apk
+    appPackage: com.saucelabs.mydemoapp.rn
+
+  ios:
+    device:
+      name: iPhone 16
+      udid: 59B28B34-EF71-44A9-B851-336C04D24E57
+      platformVersion: "18.5"
+    app: Ios-SauceLabs.app
+    bundleId: com.saucelabs.mydemo.app.ios
+    xcodeOrgId: ""
+    xcodeSigningId: ""
+
+##########################################################
+# CLOUD PROPERTIES
+##########################################################
+cloud:
+  appiumService:
+    url: http://hub.browserstack.com/wd/hub
+  credentials:
+    username: ""
+    accessKey: ""
+
+  android:
+    device:
+      name: Google Pixel 8
+      platformVersion: "14.0"
+    app: ""
+    sessionName: AndroidSauceLabTestAutomation
+    buildName: AndroidSauceLabTestBuild
+
+  ios:
+    device:
+      name: iPhone 15
+      platformVersion: "17.5"
+    app: ""
+    sessionName: IosSauceLabTestAutomation
+    buildName: IosSauceLabTestBuild

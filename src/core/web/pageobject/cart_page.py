@@ -10,8 +10,10 @@ from src.core.web.pageobject.payment_page import PaymentPage
 
 class CartPage(WebBaseLoggedInPage):
     """Page object for the Cart Page of the web application."""
-    CHECKOUT_BTN = (By.XPATH, "//button[text()='Checkout']")
-    PRODUCTS_LIST = (By.CSS_SELECTOR, ".cart .cartWrap")
+    CHECKOUT_BTN_LOC = (By.XPATH, "//button[text()='Checkout']")
+    PRODUCTS_LIST_LOC = (By.CSS_SELECTOR, ".cart .cartWrap")
+    PRODUCT_NAME_LOC = (By.CSS_SELECTOR, "h3")
+    PRODUCT_FULL_PRICE_LOC = (By.CSS_SELECTOR, ".prodTotal p")
 
     @allure.step("Find '{1}' product.")
     def find_product(self, expected_product: Product) -> Product:
@@ -22,16 +24,16 @@ class CartPage(WebBaseLoggedInPage):
         :return: Product object with details (name, price, currency)
         """
         product_elem = next(
-            (product for product in self.element_actions.find_elements(self.PRODUCTS_LIST)
-             if product.find_element(By.CSS_SELECTOR, "h3").text == expected_product.name),
+            (product for product in self.element_actions.find_elements(self.PRODUCTS_LIST_LOC)
+             if product.find_element(*self.PRODUCT_NAME_LOC).text == expected_product.name),
             None
         )
 
         if not product_elem:
             raise AssertionError(f"Product not found in cart: {expected_product.name}")
 
-        name = product_elem.find_element(By.CSS_SELECTOR, "h3").text
-        full_price = product_elem.find_element(By.CSS_SELECTOR, ".prodTotal p").text
+        name = product_elem.find_element(*self.PRODUCT_NAME_LOC).text
+        full_price = product_elem.find_element(*self.PRODUCT_FULL_PRICE_LOC).text
 
         try:
             currency, price_str = full_price.split(" ")
@@ -45,7 +47,7 @@ class CartPage(WebBaseLoggedInPage):
     def checkout(self) -> PaymentPage:
         """Proceeds to the checkout page."""
         logger.info("Proceeding to checkout.")
-        self.element_actions.click(self.CHECKOUT_BTN)
+        self.element_actions.click(self.CHECKOUT_BTN_LOC)
         return PaymentPage(self.driver)
 
     def assert_that(self) -> CartPageAssertions:
@@ -54,4 +56,4 @@ class CartPage(WebBaseLoggedInPage):
 
     def wait_until_page_loaded(self) -> None:
         """Wait until the Cart Page is loaded."""
-        self.wait_until.element_visible(self.CHECKOUT_BTN)
+        self.wait_until.element_visible(self.CHECKOUT_BTN_LOC)

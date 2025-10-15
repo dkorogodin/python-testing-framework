@@ -1,0 +1,14 @@
+[
+  {
+    "username": "invalid_username",
+    "password": "10203040"
+  },
+  {
+    "username": "bob@example.com",
+    "password": "invalid_password"
+  },
+  {
+    "username": "invalid_username@example.com",
+    "password": "invalid_password"
+  }
+]

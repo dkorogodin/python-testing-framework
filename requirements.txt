@@ -6,6 +6,9 @@ pytest-rerunfailures==16.1
 # --- Web ---
 selenium==4.36.0
 
+# --- Mobile ---
+Appium-Python-Client==5.2.4
+
 # --- Reporting ---
 allure-python-commons==2.15.0
 allure-pytest==2.15.0

@@ -17,38 +17,38 @@ if TYPE_CHECKING:
 
 class TopNavigationBar(WebBasePage):
     """Page object for the Top Navigation Bar."""
-    HOME_BTN = (By.XPATH, "//button[text()=' HOME ']")
-    ORDERS_BTN = (By.XPATH, "//button[@routerlink='/dashboard/myorders']")
-    CART_BTN = (By.XPATH, "//button[@routerlink='/dashboard/cart']")
-    SIGN_OUT_BTN = (By.XPATH, "//button[text()=' Sign Out ']")
+    HOME_BTN_LOC = (By.XPATH, "//button[text()=' HOME ']")
+    ORDERS_BTN_LOC = (By.XPATH, "//button[@routerlink='/dashboard/myorders']")
+    CART_BTN_LOC = (By.XPATH, "//button[@routerlink='/dashboard/cart']")
+    SIGN_OUT_BTN_LOC = (By.XPATH, "//button[text()=' Sign Out ']")
 
     @allure.step("Go to Home page.")
     def goto_home_page(self) -> "HomePage":
         """Navigate to Home Page."""
         from src.core.web.pageobject.home_page import HomePage
-        return self._navigate(self.HOME_BTN, HomePage)
+        return self._navigate(self.HOME_BTN_LOC, HomePage)
 
     @allure.step("Go to Orders History page.")
     def goto_orders_history_page(self) -> "OrdersHistoryPage":
         """Navigate to Orders History Page."""
         from src.core.web.pageobject.orders_history_page import OrdersHistoryPage
-        return self._navigate(self.ORDERS_BTN, OrdersHistoryPage)
+        return self._navigate(self.ORDERS_BTN_LOC, OrdersHistoryPage)
 
     @allure.step("Go to Cart page.")
     def goto_cart_page(self) -> "CartPage":
         """Navigate to Cart Page."""
         from src.core.web.pageobject.cart_page import CartPage
-        return self._navigate(self.CART_BTN, CartPage)
+        return self._navigate(self.CART_BTN_LOC, CartPage)
 
     @allure.step("Sign Out.")
     def sign_out(self) -> "LoginPage":
         """Sign out the current user."""
         from src.core.web.pageobject.login_page import LoginPage
-        return self._navigate(self.SIGN_OUT_BTN, LoginPage)
+        return self._navigate(self.SIGN_OUT_BTN_LOC, LoginPage)
 
     def wait_until_page_loaded(self) -> None:
         """Wait until the Top Navigation Bar is loaded."""
-        self.wait_until.element_clickable(self.HOME_BTN)
+        self.wait_until.element_clickable(self.HOME_BTN_LOC)
 
     def _navigate(self, locator: tuple[str, str], page_class):
         """

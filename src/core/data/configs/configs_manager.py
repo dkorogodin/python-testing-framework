@@ -3,6 +3,7 @@ from typing import Optional, Callable, Any
 
 from src.core.data.configs.api_configs import ApiConfigs
 from src.core.data.configs.db_configs import DbConfigs
+from src.core.data.configs.mobile_configs import MobileConfigs
 from src.core.data.configs.web_configs import WebConfigs
 
 
@@ -21,6 +22,7 @@ class ConfigsManager:
 
         self._api_configs: Optional[ApiConfigs] = None
         self._web_configs: Optional[WebConfigs] = None
+        self._mobile_configs: Optional[MobileConfigs] = None
         self._payments_db_configs: Optional[DbConfigs] = None
         self._products_db_configs: Optional[DbConfigs] = None
 
@@ -37,6 +39,13 @@ class ConfigsManager:
             path = self.config_path / "web_config.yaml"
             self._web_configs = WebConfigs(path, self.override_fn)
         return self._web_configs
+
+    @property
+    def mobile_configs(self) -> MobileConfigs:
+        if self._mobile_configs is None:
+            path = self.config_path / "mobile_config.yaml"
+            self._mobile_configs = MobileConfigs(path, self.override_fn)
+        return self._mobile_configs
 
     @property
     def payments_db_configs(self) -> DbConfigs:
