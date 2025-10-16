@@ -19,12 +19,13 @@ class LoginPage(BasePage):
     @allure.step("Logging in to app with '{1}' username and '{2}' password.")
     def login(self, username: str, password: str):
         """Logs in using the provided credentials."""
-        (self.enter_username(username)
-         .enter_password(password)
-         .tap_login_button())
+        return (self.enter_username(username)
+                .enter_password(password)
+                .tap_login_button())
 
+    @allure.step("Logging in to app with hardcoded user that app provided on the screen.")
     def login_with_first_hardcoded_user(self):
-        """Logs in using the provided credentials."""
+        """Logs in using the hardcoded user that app provided on the screen."""
         self.element_actions.click(self.FIRST_VALID_HARDCODED_USER_LOC)
         self.tap_login_button()
 

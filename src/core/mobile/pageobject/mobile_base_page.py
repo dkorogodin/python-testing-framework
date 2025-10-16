@@ -44,3 +44,10 @@ class MobileBasePage(BasePageObject, ABC):
     def _is_ios(self) -> bool:
         """Checks if current platform is iOS."""
         return self.driver.capabilities.get("platformName", "").lower() == MobilePlatform.IOS.value.lower()
+
+    def _get_platform_locator(self, locator_map: dict) -> tuple[str, str]:
+        """Returns locator tuple based on platform name."""
+        platform = self.driver.capabilities.get("platformName", "").lower()
+        if "ios" in platform:
+            return locator_map["ios"]
+        return locator_map["android"]

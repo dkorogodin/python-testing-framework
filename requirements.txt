@@ -17,6 +17,9 @@ allure-pytest==2.15.0
 requests==2.32.5
 wiremock==2.7.0
 
+# --- BDD ---
+pytest-bdd==8.1.0
+
 # --- DB ---
 mysql-connector-python==9.4.0
 SQLAlchemy==2.0.44

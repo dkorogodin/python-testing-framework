@@ -17,6 +17,18 @@ class LoginPage(BasePage):
     USERNAME_ERROR_MSG_LOC = (AppiumBy.XPATH, '//*[@content-desc="Username-error-message"]/android.widget.TextView')
     PASSWORD_ERROR_MSG_LOC = (AppiumBy.XPATH, '//*[@content-desc="Password-error-message"]/android.widget.TextView')
 
+    @allure.step("Logging in to app with '{1}' username and '{2}' password.")
+    def login(self, username: str, password: str):
+        """Logs in using the provided credentials."""
+        return (self.enter_username(username)
+                .enter_password(password)
+                .tap_login_button())
+
+    def login_then_goto_catalog_page(self, username: str, password: str) -> CatalogPage:
+        """Perform login and navigate to Catalog Page."""
+        self.login(username, password)
+        return CatalogPage(self.driver)
+
     def enter_username(self, username: str):
         """Enters the provided username."""
         self.element_actions.type_text(self.USERNAME_FLD_LOC, username)
@@ -31,18 +43,6 @@ class LoginPage(BasePage):
         """Taps the login button."""
         self.element_actions.click(self.LOGIN_BTN_LOC)
         return self
-
-    @allure.step("Logging in to app with '{1}' username and '{2}' password.")
-    def login(self, username: str, password: str):
-        """Logs in using the provided credentials."""
-        return (self.enter_username(username)
-                .enter_password(password)
-                .tap_login_button())
-
-    def login_then_goto_catalog_page(self, username: str, password: str) -> CatalogPage:
-        """Perform login and navigate to Catalog Page."""
-        self.login(username, password)
-        return CatalogPage(self.driver)
 
     def get_username_error_msg(self) -> str:
         """Returns the error message for missing username."""

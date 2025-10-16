@@ -9,6 +9,7 @@ from src.core.mobile.assertions.android.catalog_page_assertions import CatalogPa
 from src.core.mobile.data.enums.mobile_gesture_direction import MobileGestureDirection
 from src.core.mobile.model.product import Product
 from src.core.mobile.pageobject.android.base_page import BasePage
+from src.core.mobile.pageobject.android.product_details_page import ProductDetailsPage
 from src.core.mobile.util.gestures.model.android.swipe_gesture import SwipeGesture
 
 
@@ -18,12 +19,17 @@ class CatalogPage(BasePage):
     HEADER_LOC = (AppiumBy.ANDROID_UIAUTOMATOR, "new UiSelector().text(\"Products\")")
     SCROLL_VIEW_LOC = (AppiumBy.CLASS_NAME, "android.widget.ScrollView")
     PRODUCTS_LOC = (AppiumBy.XPATH, "//android.view.ViewGroup[@content-desc=\"store item\"]")
-    PRODUCT_TITLE_LOC = (AppiumBy.XPATH, ".//android.widget.TextView[@content-desc=\"Product Title\"]")
-    PRODUCT_PRICE_LOC = (AppiumBy.XPATH, ".//android.widget.TextView[@content-desc=\"Product Price\"]")
+    PRODUCT_TITLE_LOC = (AppiumBy.XPATH, ".//android.widget.TextView[@content-desc=\"store item text\"]")
+    PRODUCT_PRICE_LOC = (AppiumBy.XPATH, ".//android.widget.TextView[@content-desc=\"store item price\"]")
 
     def get_header(self) -> str:
         """Returns the page header text."""
         return self.element_actions.get_text(self.HEADER_LOC)
+
+    def tap_product_by_title(self, title: str):
+        """Taps the product with the specified title in the catalog."""
+        self._scroll_until_product_found(title).click()
+        return ProductDetailsPage(self.driver)
 
     @allure.step("Find '{1}' product.")
     def get_product_by_title(self, title: str) -> Product:

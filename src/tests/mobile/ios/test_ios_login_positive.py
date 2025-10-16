@@ -6,7 +6,7 @@ import pytest
 @pytest.mark.smoke
 @pytest.mark.positive
 @pytest.mark.login
-class TestIosLoginNegative:
+class TestIosLoginPositive:
 
     @allure.description("Login validation: Verify login with valid credentials returns Catalog page.")
     def test_valid_login(self, login_page):

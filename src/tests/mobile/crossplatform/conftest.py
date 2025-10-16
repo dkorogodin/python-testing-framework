@@ -1,24 +1,14 @@
-import os
-
 import pytest
 
-from src.core.data.configs.configs_manager import ConfigsManager
 from src.core.mobile.appiumservice.appium_service_factory import AppiumServiceFactory
-from src.core.mobile.data.enums.mobile_platform import MobilePlatform
 from src.core.mobile.manager.mobile_manager import MobileManager
-from src.core.mobile.pageobject.ios.catalog_page import CatalogPage
-
-
-@pytest.fixture(scope="session")
-def ios_configs_manager():
-    os.environ["COMMON_PLATFORM"] = MobilePlatform.IOS.name
-    return ConfigsManager()
+from src.core.mobile.pageobject.crossplatform.catalog_page import CatalogPage
 
 
 @pytest.fixture()
-def appium_service(ios_configs_manager):
+def appium_service(configs_manager):
     """Start local Appium service only for non-cloud runs."""
-    mobile_configs = ios_configs_manager.mobile_configs
+    mobile_configs = configs_manager.mobile_configs
 
     if mobile_configs.is_cloud:
         yield None
@@ -30,9 +20,9 @@ def appium_service(ios_configs_manager):
 
 
 @pytest.fixture()
-def mobile_manager(ios_configs_manager, appium_service):
+def mobile_manager(configs_manager, appium_service):
     """Create the Appium driver (local or cloud)."""
-    mobile_configs = ios_configs_manager.mobile_configs
+    mobile_configs = configs_manager.mobile_configs
     app_package_or_bundle_id = mobile_configs.app_package_or_bundle_id
 
     manager = MobileManager(mobile_configs)
