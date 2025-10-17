@@ -25,7 +25,7 @@ class MobileConfigs:
         # =============================
         self.mobile_platform = MobilePlatform.from_property(self.loader.get("common.platform"))
         self.is_cloud = self.loader.get("common.isCloud")
-        self.is_video_recorded = self.loader.get("common.isVideoRecorded")
+        self.recordVideo = self.loader.get("common.recordVideo")
 
         self.app_name = None
         self.app_package_or_bundle_id = None

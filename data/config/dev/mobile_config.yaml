@@ -4,7 +4,7 @@
 common:
   platform: android          # android | ios
   isCloud: false
-  isVideoRecorded: false
+  recordVideo: false
 
 ##########################################################
 # LOCAL PROPERTIES

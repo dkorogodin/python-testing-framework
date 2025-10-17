@@ -3,6 +3,27 @@ import pytest
 from src.core.mobile.appiumservice.appium_service_factory import AppiumServiceFactory
 from src.core.mobile.manager.mobile_manager import MobileManager
 from src.core.mobile.pageobject.crossplatform.catalog_page import CatalogPage
+from src.core.mobile.util.video_util import VideoUtil
+
+
+@pytest.fixture(autouse=True)
+def video_recorder(configs_manager, mobile_manager, request):
+    """
+    Start/stop Appium video recording automatically for mobile tests.
+    Only active if 'recordVideo' is enabled in mobile configs.
+    """
+    driver = mobile_manager.get_driver()
+
+    if configs_manager.mobile_configs.recordVideo:
+        VideoUtil.start_recording(driver)
+
+    yield  # Run test
+
+    rep_call = getattr(request.node, "rep_call", None)
+    if configs_manager.mobile_configs.recordVideo:
+        base64_data = VideoUtil.stop_recording(driver)
+        if rep_call and rep_call.failed:
+            VideoUtil.save_video_if_failed(driver, request.node.name, base64_data)
 
 
 @pytest.fixture()
