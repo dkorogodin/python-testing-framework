@@ -2,6 +2,7 @@ pipeline {
     agent any
 
     environment {
+        PATH+EXTRA = "/usr/local/bin"
         DOCKER_IMAGE = "python-testing-framework:latest"
         ALLURE_DIR = "target/reports/allure-results"
     }
@@ -15,15 +16,15 @@ pipeline {
 
         stage('Run Tests in Container') {
             steps {
-            sh '''
-            docker run --rm \
-                -v /var/run/docker.sock:/var/run/docker.sock \
-                --privileged \
-                -v $(pwd):/app -w /app \
-                -e DOCKER_HOST_INTERNAL=1 \
-                $DOCKER_IMAGE \
-                pytest -n 4 --dist=loadscope -m api --mock_service=local --alluredir=$ALLURE_DIR
-            '''
+                sh '''
+                docker run --rm \
+                    -v /var/run/docker.sock:/var/run/docker.sock \
+                    --privileged \
+                    -v $(pwd):/app -w /app \
+                    -e DOCKER_HOST_INTERNAL=1 \
+                    $DOCKER_IMAGE \
+                    pytest -n 4 --dist=loadscope -m api --mock_service=local --alluredir=$ALLURE_DIR
+                '''
             }
         }
 
