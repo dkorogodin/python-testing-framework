@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     environment {
-        PATH+EXTRA = "/usr/local/bin"
         DOCKER_IMAGE = "python-testing-framework:latest"
         ALLURE_DIR = "target/reports/allure-results"
     }
