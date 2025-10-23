@@ -1,9 +1,12 @@
+import os
+
 import pytest
 from pytest_bdd import scenarios, given, when, then, parsers
 
 from src.core.mobile.pageobject.android.catalog_page import CatalogPage
 
-scenarios("../features/login.feature")
+CURRENT_DIR = os.path.dirname(__file__)
+scenarios(os.path.abspath(os.path.join(CURRENT_DIR, "../features/login.feature")))
 
 
 @pytest.fixture

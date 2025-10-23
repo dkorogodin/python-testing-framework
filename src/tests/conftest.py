@@ -15,5 +15,5 @@ def pytest_configure(config):
 
 
 @pytest.fixture(scope="session")
-def configs_manager():
-    return ConfigsManager()
+def configs_manager(request):
+    return ConfigsManager(pytest_config=request.config)

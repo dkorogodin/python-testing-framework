@@ -1,10 +1,13 @@
+import os
+
 import pytest
 from pytest_bdd import scenarios, given, when, then, parsers
 
 from src.core.mobile.pageobject.android.catalog_page import CatalogPage
 from src.core.mobile.pageobject.android.product_details_page import ProductDetailsPage
 
-scenarios("../features/product.feature")
+CURRENT_DIR = os.path.dirname(__file__)
+scenarios(os.path.abspath(os.path.join(CURRENT_DIR, "../features/product.feature")))
 
 
 @pytest.fixture
@@ -40,7 +43,8 @@ def verify_on_product_details(product_details_page, title):
     assert product_details_page.get_header() == title, "Not on Product Details page!"
 
 
-@then(parsers.parse('I should see product details with title "{title}", price "{price}" and description "{description}"'))
+@then(
+    parsers.parse('I should see product details with title "{title}", price "{price}" and description "{description}"'))
 def verify_product_details(product_details_page, title, price, description):
     product = product_details_page.get_product_details()
     assert product.title == title

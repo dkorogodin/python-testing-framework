@@ -1,5 +1,4 @@
 from pathlib import Path
-from typing import Optional, Callable, Any
 
 from src.core.mobile.data.enums.mobile_platform import MobilePlatform
 from src.core.util.system.config_loader_util import ConfigLoader
@@ -17,8 +16,8 @@ class MobileConfigs:
     # src/core/data/configs/mobile_configs.py
     APP_PATH = Path(__file__).resolve().parents[4] / "data/app"
 
-    def __init__(self, file_path: Path, override_fn: Optional[Callable[[str], Any]] = None):
-        self.loader = ConfigLoader(file_path, override_fn)
+    def __init__(self, loader: ConfigLoader):
+        self.loader = loader
 
         # =============================
         # COMMON

@@ -1,3 +1,4 @@
+import os
 import time
 from pathlib import Path
 
@@ -13,7 +14,8 @@ from src.core.util.system.port_util import find_free_port
 class WireMockLocal(WireMockService):
     def __init__(self, configs_manager: ConfigsManager, host: str = "localhost"):
         super().__init__(configs_manager)
-        self.host = host
+        docker_host = os.environ.get("DOCKER_HOST_INTERNAL", "").lower() in ("1", "true", "yes")
+        self.host = "host.docker.internal" if docker_host else host
         self.port = find_free_port()
 
         # src/core/api/mock/infra/wire_mock_local.py

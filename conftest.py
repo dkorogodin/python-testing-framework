@@ -3,6 +3,18 @@ import pytest
 from src.core.util.platformshared.screenshot_util import ScreenshotUtil
 
 
+# ---------- Pytest CLI integration ----------
+
+def pytest_addoption(parser):
+    parser.addoption("--browser_name", action="store", default=None)
+    parser.addoption("--driver_type", action="store", default=None)
+    parser.addoption("--app_baseurl", action="store", default=None)
+    parser.addoption("--app_username", action="store", default=None)
+    parser.addoption("--app_password", action="store", default=None)
+    parser.addoption("--mock_service", action="store", default=None)
+    parser.addoption("--a", action="store", default=None)
+
+
 def pytest_collection_modifyitems(config, items):
     """
     Automatically rerun only web tests (marked with @pytest.mark.web)

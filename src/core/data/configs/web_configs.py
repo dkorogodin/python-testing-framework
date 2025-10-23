@@ -1,12 +1,10 @@
-from pathlib import Path
-from typing import Optional, Callable, Any
-
 from src.core.util.system.config_loader_util import ConfigLoader
 
 
 class WebConfigs:
-    def __init__(self, file_path: Path, override_fn: Optional[Callable[[str], Any]] = None):
-        self.loader = ConfigLoader(file_path, override_fn)
+
+    def __init__(self, loader: ConfigLoader):
+        self.loader = loader
         self.driver_type = self.loader.get("driver.type")
         self.browser_name = self.loader.get("browser.name")
         self.browser_version = self.loader.get("browser.version")

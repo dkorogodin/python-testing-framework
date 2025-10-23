@@ -8,9 +8,8 @@ from src.core.data.configs.configs_manager import ConfigsManager
 class WireMockServiceFactory:
     @staticmethod
     def get_wiremock_service(configs_manager: ConfigsManager) -> WireMockService:
-        service_type = WireMockServiceType.from_property(
-            configs_manager.api_configs.mock_service
-        )
+        mockservice = configs_manager.api_configs.mock_service
+        service_type = WireMockServiceType.from_property(mockservice)
 
         if service_type == WireMockServiceType.LOCAL:
             return WireMockLocal(configs_manager)

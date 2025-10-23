@@ -9,9 +9,9 @@ from src.core.mobile.manager.mobile_manager import MobileManager
 
 
 @pytest.fixture(scope="session")
-def android_configs_manager():
+def android_configs_manager(request):
     os.environ["COMMON_PLATFORM"] = MobilePlatform.ANDROID.name
-    return ConfigsManager()
+    return ConfigsManager(pytest_config=request.config)
 
 
 @pytest.fixture()

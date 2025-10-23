@@ -11,9 +11,9 @@ from src.core.mobile.util.video_util import VideoUtil
 
 
 @pytest.fixture(scope="session")
-def android_configs_manager():
+def android_configs_manager(request):
     os.environ["COMMON_PLATFORM"] = MobilePlatform.ANDROID.name
-    return ConfigsManager()
+    return ConfigsManager(pytest_config=request.config)
 
 
 @pytest.fixture(autouse=True)

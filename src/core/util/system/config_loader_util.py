@@ -1,7 +1,6 @@
-import os
 from pathlib import Path
-from typing import Any, Callable, Optional
-
+from typing import Any, Optional
+import os
 import yaml
 
 
@@ -13,9 +12,9 @@ class ConfigLoader:
       3. YAML file defaults
     """
 
-    def __init__(self, yaml_path: Path, override_fn: Optional[Callable[[str], Any]] = None):
+    def __init__(self, yaml_path: Path, pytest_config=None):
         self.yaml_path = yaml_path
-        self.override_fn = override_fn
+        self.pytest_config = pytest_config
         self._config = self._load_yaml()
 
     def _load_yaml(self) -> dict:
@@ -30,41 +29,34 @@ class ConfigLoader:
         ENV VAR -> CLI override -> YAML -> default
         key format: browser.name, driver.type, etc.
         """
-        env_key = key.replace(".", "_").upper()  # e.g., browser.name -> BROWSER_NAME
-        if env_key in os.environ:
-            return os.environ[env_key]
 
-        if self.override_fn:
-            cli_value = self.override_fn(key)
-            if cli_value is not None:
-                return cli_value
+        env_value = self._get_from_env_variables(key)
+        if env_value is not None:
+            return env_value
 
-        parts = key.split(".")
+        cli_value = self._get_from_pytest_cli(key)
+        if cli_value is not None:
+            return cli_value
+
+        return self._get_from_yaml(key, default)
+
+    def _get_from_env_variables(self, key: str):
+        env_key = key.replace(".", "_").upper()
+        return os.environ.get(env_key)
+
+    def _get_from_pytest_cli(self, key: str) -> Optional[str]:
+        if self.pytest_config is None:
+            return None
+        cli_key = key.replace(".", "_")
+        if hasattr(self.pytest_config.option, cli_key):
+            return getattr(self.pytest_config.option, cli_key)
+        return None
+
+    def _get_from_yaml(self, key: str, default: Any = None):
         value = self._config
-        try:
-            for part in parts:
+        for part in key.split("."):
+            if isinstance(value, dict) and part in value:
                 value = value[part]
-            return value
-        except (KeyError, TypeError):
-            return default
-
-
-# ---------- Pytest CLI integration ----------
-
-def pytest_addoption(parser):
-    parser.addoption("--browser_name", action="store", default=None)
-    parser.addoption("--driver_type", action="store", default=None)
-    parser.addoption("--app_baseurl", action="store", default=None)
-    parser.addoption("--app_username", action="store", default=None)
-    parser.addoption("--app_password", action="store", default=None)
-    parser.addoption("--mock_service", action="store", default=None)
-
-
-def get_cli_option(key: str):
-    """
-    Maps config keys to pytest CLI options
-    """
-    from _pytest.config import get_config
-    config = get_config()
-    cli_key = key.replace(".", "_")
-    return config.getoption(f"--{cli_key}")
+            else:
+                return default
+        return value
