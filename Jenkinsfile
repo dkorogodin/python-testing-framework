@@ -31,7 +31,7 @@ pipeline {
 
         stage('Build and Start MySQL Docker Containers') {
             when {
-                expression { env.DB_INFRA == 'local' }
+                expression { env.DB_INFRA == 'dockercompose' }
             }
             steps {
                 echo "Starting MySQL containers because DB_INFRA=$DB_INFRA"
@@ -41,7 +41,7 @@ pipeline {
 
         stage('Build and Start Selenium Grid Docker Container') {
             when {
-                expression { env.SELENIUM_GRID == 'local' }
+                expression { env.SELENIUM_GRID == 'dockercompose' }
             }
             steps {
                 echo "Starting Selenium Grid because SELENIUM_GRID=$SELENIUM_GRID"
