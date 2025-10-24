@@ -4,7 +4,7 @@ from typing import Optional
 
 class WireMockServiceType(Enum):
     LOCAL = "local"
-    CONTAINER = "container"
+    TEST_CONTAINER = "testcontainer"
 
     @staticmethod
     def from_property(value: Optional[str]) -> "WireMockServiceType":
