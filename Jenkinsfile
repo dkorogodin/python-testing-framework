@@ -76,12 +76,12 @@ pipeline {
 
     post {
         always {
-            archiveArtifacts artifacts: 'target/reports/allure-results/**', allowEmptyArchive: true
-            cleanWs()
-
             echo 'Cleaning up containers...'
             sh 'docker compose -f data/docker/docker-compose-mysql.yml down || true'
             sh 'docker compose -f data/docker/docker-compose-selenium-grid.yml down || true'
+
+            archiveArtifacts artifacts: 'target/reports/allure-results/**', allowEmptyArchive: true
+            cleanWs()
         }
     }
 }
