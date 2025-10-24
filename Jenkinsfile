@@ -3,7 +3,6 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = "python-testing-framework:latest"
-        ALLURE_DIR = "target/reports/allure-results"
     }
 
     stages {
@@ -22,7 +21,7 @@ pipeline {
                     -v $(pwd):/app -w /app \
                     -e DOCKER_HOST_INTERNAL=1 \
                     $DOCKER_IMAGE \
-                    pytest -n 4 --dist=loadscope -m api --mock_service=local --alluredir=$ALLURE_DIR
+                    pytest $CONCURRENCY_PARAMS -m $TEST_MARKERS --alluredir=$ALLURE_DIR $ADDITIONAL_PARAMS
                 '''
             }
         }
