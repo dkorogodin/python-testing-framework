@@ -13,8 +13,8 @@ pipeline {
         stage('Show Parameters') {
             steps {
                 sh '''
-                    echo "DB_INFRA=DB_INFRA"
-                    echo "SELENIUM_GRID=SELENIUM_GRID"
+                    echo "DB_INFRA=$DB_INFRA"
+                    echo "SELENIUM_GRID=$SELENIUM_GRID"
                     echo "CONCURRENCY_PARAMS=$CONCURRENCY_PARAMS"
                     echo "TEST_MARKERS=$TEST_MARKERS"
                     echo "ALLURE_DIR=$ALLURE_DIR"
