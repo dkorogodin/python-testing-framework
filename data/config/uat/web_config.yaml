@@ -2,9 +2,9 @@
 driver:
   type: remote
 
-# can be: local, container
+# can be: dockercompose, testcontainer
 selenium:
-  grid: container
+  grid: testcontainer
 
 browser:
   name: chrome

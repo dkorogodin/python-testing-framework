@@ -3,7 +3,7 @@ db:
   port: 3308
   username: user
   password: password
-  # can be: local, container
-  infra: container
+  # can be: dockercompose, testcontainer
+  infra: testcontainer
   initscript: initial-productdb-test-data.sql
 

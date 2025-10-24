@@ -3,6 +3,6 @@ db:
   port: 3307
   username: user
   password: password
-  # can be: local, container
-  infra: container
+  # can be: dockercompose, testcontainer
+  infra: testcontainer
   initscript: initial-paymentdb-test-data.sql

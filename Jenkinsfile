@@ -3,8 +3,8 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = "python-testing-framework:latest"
-        DB_INFRA = "${params.DB_INFRA ?: 'container'}"
-        SELENIUM_GRID = "${params.SELENIUM_GRID ?: 'container'}"
+        DB_INFRA = "${params.DB_INFRA ?: 'testcontainer'}"
+        SELENIUM_GRID = "${params.SELENIUM_GRID ?: 'testcontainer'}"
         CONCURRENCY_PARAMS = "${params.CONCURRENCY_PARAMS ?: '-n 4 --dist=loadscope'}"
         ALLURE_DIR = "${params.ALLURE_DIR ?: 'target/reports/allure-results'}"
     }
