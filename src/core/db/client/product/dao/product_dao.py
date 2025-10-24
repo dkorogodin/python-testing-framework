@@ -1,9 +1,6 @@
-import logging
-
+from src import logger
 from src.core.db.client.product.entity.product_entity import ProductEntity
 from src.core.db.core.base_dao import BaseDao
-
-logger = logging.getLogger(__name__)
 
 
 class ProductDao(BaseDao[ProductEntity]):

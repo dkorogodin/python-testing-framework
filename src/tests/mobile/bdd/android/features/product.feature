@@ -21,5 +21,5 @@ Feature: Product Scenarios
     And I should see product details with title "<title>", price "<price>" and description "<description>"
 
     Examples:
-      | title               | price  | description                                                                                                                            |
+      | title             | price | description                                                                                                                                                     |
       | Sauce Labs Onesie | $7.99 | Rib snap infant onesie for the junior automation engineer in development. Reinforced 3-snap bottom closure, two-needle hemmed sleeved and bottom won't unravel. |

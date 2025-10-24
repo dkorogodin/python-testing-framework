@@ -1,23 +1,23 @@
-import logging
 import time
 
 import requests
 from testcontainers.core.container import DockerContainer
 
+from src import logger
 from src.core.data.configs.web_configs import WebConfigs
+from src.core.web.infra.selenium_grid_service import SeleniumGridService
 
-logger = logging.getLogger(__name__)
 
+class SeleniumGridTestContainer(SeleniumGridService):
 
-class SeleniumGridTestContainer:
-    """Manages standalone Selenium containers for browser automation tests."""
+    def __init__(self, web_configs: WebConfigs):
+        self.container = None
+        self.hub_url = None
+        super().__init__(web_configs)
 
-    def __init__(self, web_props: WebConfigs):
-        self.browser_name = web_props.browser_name.lower()
-        self.container: DockerContainer | None = None
-
-        docker_image = self._get_docker_image()
-        logger.info("Starting Selenium standalone container with '%s' docker image...", docker_image)
+    def setup(self):
+        docker_image = self._get_docker_image(self.web_configs.browser_name.lower())
+        logger.info("Starting Selenium Grid test container with '%s' docker image...", docker_image)
 
         self.container = (
             DockerContainer(docker_image)
@@ -32,27 +32,23 @@ class SeleniumGridTestContainer:
         port = self.container.get_exposed_port(4444)
         self.hub_url = f"http://{host}:{port}/wd/hub"
         self._wait_for_grid(self.hub_url)
-        web_props.remote_address = self.hub_url
 
-        logger.info(
-            "Selenium container with '%s' docker image started at '%s'", docker_image, self.hub_url
-        )
+        self.web_configs.remote_address = self.hub_url
+        logger.info("Selenium Grid started at '%s'", self.hub_url)
 
     def shutdown(self):
-        """Stops the Selenium container."""
         if self.container:
-            logger.info("Stopping Selenium standalone container at '%s'...", self.hub_url)
+            logger.info("Stopping Selenium Grid test container at '%s'...", self.hub_url)
             self.container.stop()
-            logger.info("Selenium container stopped at '%s'.", self.hub_url)
+            logger.info("Selenium Grid test container at '%s' stopped.", self.hub_url)
 
-    def _get_docker_image(self) -> str:
-        """Returns the Docker image name for the specified browser."""
-        if self.browser_name == "chrome":
+    def _get_docker_image(self, browser_name: str) -> str:
+        if browser_name == "chrome":
             return "selenium/standalone-chrome:latest"
-        elif self.browser_name == "firefox":
+        elif browser_name == "firefox":
             return "selenium/standalone-firefox:latest"
         else:
-            logger.warning("Unknown browser '%s', defaulting to Chrome.", self.browser_name)
+            logger.warning("Unknown browser '%s', defaulting to Chrome.", browser_name)
             return "selenium/standalone-chrome:latest"
 
     def _wait_for_grid(self, url, timeout=30):

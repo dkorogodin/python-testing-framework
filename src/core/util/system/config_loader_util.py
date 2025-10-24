@@ -1,6 +1,7 @@
+import os
 from pathlib import Path
 from typing import Any, Optional
-import os
+
 import yaml
 
 

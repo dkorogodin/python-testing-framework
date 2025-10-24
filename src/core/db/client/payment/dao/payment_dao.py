@@ -1,12 +1,10 @@
-import logging
 from typing import List
 
 from sqlalchemy.orm import Session
 
+from src import logger
 from src.core.db.client.payment.entity.payment_entity import PaymentEntity
 from src.core.db.core.base_dao import BaseDao
-
-logger = logging.getLogger(__name__)
 
 
 class PaymentDao(BaseDao[PaymentEntity]):

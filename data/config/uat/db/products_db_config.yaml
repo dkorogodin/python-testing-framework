@@ -1,4 +1,9 @@
 db:
   name: productdb
+  port: 3308
   username: user
   password: password
+  # can be: local, container
+  infra: container
+  initscript: initial-productdb-test-data.sql
+

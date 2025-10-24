@@ -4,8 +4,8 @@ from src.core.api.mock.infra.wire_mock_factory import WireMockServiceFactory
 from src.core.api.service.service_manager import ApiMicroServiceManager
 from src.core.db.core.config import DbConfig
 from src.core.db.core.db_pool import DbPool
-from src.core.db.infra.db_test_container import DbTestContainer
-from src.core.web.infra.selenium_grid_test_container import SeleniumGridTestContainer
+from src.core.db.infra.db_factory import DbFactory
+from src.core.web.infra.selenium_grid_factory import SeleniumGridFactory
 from src.core.web.manager.web_app_lifecycle import WebAppLifecycle
 from src.core.web.pageobject.page_navigator import PageNavigator
 
@@ -13,12 +13,12 @@ from src.core.web.pageobject.page_navigator import PageNavigator
 @pytest.fixture(scope="session")
 def selenium_grid(configs_manager):
     props = configs_manager.web_configs
-    container = None
+    selenium_grid_service = None
     if props.driver_type.lower() == "remote":
-        container = SeleniumGridTestContainer(props)
-    yield container
-    if container:
-        container.shutdown()
+        selenium_grid_service = SeleniumGridFactory().get_selenium_grid_service(configs_manager)
+    yield selenium_grid_service
+    if selenium_grid_service:
+        selenium_grid_service.shutdown()
 
 
 @pytest.fixture(scope="session")
@@ -31,7 +31,7 @@ def wiremock_service(configs_manager):
 
 @pytest.fixture(scope="session")
 def payment_db_pool(configs_manager):
-    payment = DbTestContainer(configs_manager.payments_db_configs, DbTestContainer.INIT_PAYMENT_DB_TEST_DATA_PATH)
+    payment = DbFactory.get_db_service(configs_manager.payments_db_configs)
     pool = DbPool(DbConfig(payment), max_pool_size=5)
     yield pool
     payment.shutdown()
@@ -39,7 +39,7 @@ def payment_db_pool(configs_manager):
 
 @pytest.fixture(scope="session")
 def product_db_pool(configs_manager):
-    product = DbTestContainer(configs_manager.products_db_configs, DbTestContainer.INIT_PRODUCT_DB_TEST_DATA_PATH)
+    product = DbFactory.get_db_service(configs_manager.products_db_configs)
     pool = DbPool(DbConfig(product), max_pool_size=5)
     yield pool
     product.shutdown()

@@ -1,4 +1,8 @@
 db:
   name: paymentdb
+  port: 3307
   username: user
   password: password
+  # can be: local, container
+  infra: container
+  initscript: initial-paymentdb-test-data.sql

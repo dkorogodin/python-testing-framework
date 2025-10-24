@@ -6,6 +6,7 @@ class WebConfigs:
     def __init__(self, loader: ConfigLoader):
         self.loader = loader
         self.driver_type = self.loader.get("driver.type")
+        self.selenium_grid = self.loader.get("selenium.grid")
         self.browser_name = self.loader.get("browser.name")
         self.browser_version = self.loader.get("browser.version")
         self.web_base_url = self.loader.get("app.baseurl")
@@ -19,7 +20,3 @@ class WebConfigs:
         self.cloud_session_name = self.loader.get("cloud.session.name")
         self.cloud_build_name = self.loader.get("cloud.build.name")
         self.remote_address = None
-
-    def set_remote_address(self, new_remote_address: str):
-        """Update the remote_address value."""
-        self.remote_address = new_remote_address

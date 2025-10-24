@@ -2,6 +2,10 @@
 driver:
   type: remote
 
+# can be: local, container
+selenium:
+  grid: container
+
 browser:
   name: chrome
   version: 139

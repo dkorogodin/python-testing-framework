@@ -1,0 +1,27 @@
+# To execute this docker compose yml file use `docker compose -f data/docker/docker-compose-mysql.yml up -d`
+# Add the `-d` flag at the end for detached execution
+# To stop the execution, hit Ctrl+C, and then `docker compose -f data/docker/docker-compose-mysql.yml down`services:
+services:
+  paymentdb:
+    image: "mysql/mysql-server"
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'paymentdb'
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_USER: user
+    ports:
+      - '3307:3306'
+
+  productdb:
+    image: "mysql/mysql-server"
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'productdb'
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_USER: user
+    ports:
+      - '3308:3306'
