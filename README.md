@@ -139,7 +139,6 @@ cloud.ios.device.name={DEVICE}
 cloud.ios.device.platformVersion={VERSION}
 cloud.ios.sessionName={SESSION_NAME}
 cloud.ios.buildName={BUILD_NAME}
-
 ```
 * **Upload App to BrowserStack**
 ```bash
@@ -168,6 +167,7 @@ pytest -n 4 --dist=loadscope -m web --db_infra=dockercompose --selenium_grid=doc
 # Data bases, Selenium Grid, WireMock will be up using test containers automatically.  
 pytest -m web 
 ```
+
 ---
 
 ## CI/ CD
@@ -216,7 +216,7 @@ pytest -m web
 │   │   ├── manager/                      # Provides classes for managing mobile devices, apps, and drivers in Appium tests.
 │   │   ├── model/                        # Provides core data models used across mobile testing and automation frameworks.
 │   │   ├── pageobject/                   # Contains Page Object classes for mobile testing across Android and iOS platforms.
-│   │   └── mobile/                       # Provides utility classes and helpers for mobile test automation.
+│   │   └── util/                         # Provides utility classes and helpers for mobile test automation.
 │   ├── util                              # Utility classes and helpers for the automation framework.
 │   │   ├── platformshared/               # Provides shared utilities, abstractions, and helpers for platform-independent test automation.
 │   │   └── system/                       # Utilities for system-level operations in the automation framework.
