@@ -1,7 +1,6 @@
 import allure
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import Select
 
 from src import logger
 from src.core.api.service.payment.model.credit_card import CreditCard
@@ -66,8 +65,8 @@ class PaymentPage(WebBaseLoggedInPage):
         """Fill in expiry month and year from a date object."""
         month = credit_card_expiry_date.month
         year = credit_card_expiry_date.year % 100
-        Select(self.element_actions.find_element(self.EXPIRY_DATE_MONTH_MENU_LOC)).select_by_visible_text(str(month))
-        Select(self.element_actions.find_element(self.EXPIRY_DATE_YEAR_MENU_LOC)).select_by_visible_text(str(year))
+        self.element_actions.select_by_visible_text(self.EXPIRY_DATE_MONTH_MENU_LOC, str(month))
+        self.element_actions.select_by_visible_text(self.EXPIRY_DATE_YEAR_MENU_LOC, str(year))
         return self
 
     def _fill_in_credit_card_number(self, number: str) -> "PaymentPage":

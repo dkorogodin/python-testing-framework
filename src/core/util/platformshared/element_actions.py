@@ -1,6 +1,7 @@
 from typing import Dict
 
 from selenium.webdriver.remote.webelement import WebElement
+from selenium.webdriver.support.select import Select
 
 from src import logger
 from src.core.util.platformshared.web_driver_wait_conditions import WebDriverWaitConditions
@@ -29,7 +30,7 @@ class ElementActions:
         return self.driver.find_elements(*locator)
 
     # ----------------------------
-    # Clicks
+    # Clicking
     # ----------------------------
     def click(self, locator: tuple[str, str]) -> "ElementActions":
         logger.info(f"Clicking element: {locator}")
@@ -54,6 +55,15 @@ class ElementActions:
         visible_element = self.wait_until.element_visible(locator)
         visible_element.clear()
         visible_element.send_keys(*keys_to_send)
+        return self
+
+    # ----------------------------
+    # Selecting
+    # ----------------------------
+    def select_by_visible_text(self, locator: tuple[str, str], text: str) -> "ElementActions":
+        logger.info(f"Selecting menu item '{text}' in menu: {locator}")
+        menu = self.wait_until.element_visible(locator)
+        Select(menu).select_by_visible_text(text)
         return self
 
     # ----------------------------
