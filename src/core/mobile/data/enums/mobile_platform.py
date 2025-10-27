@@ -6,6 +6,11 @@ class MobilePlatform(Enum):
     ANDROID = "android"
     IOS = "ios"
 
+    @property
+    def appium_name(self) -> str:
+        """Returns the correct Appium platform name."""
+        return self.value.capitalize()
+
     @staticmethod
     def from_property(value: Optional[str]) -> "MobilePlatform":
         try:

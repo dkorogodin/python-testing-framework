@@ -26,17 +26,17 @@ class UIAutomator2Driver(Driver):
 
     def _get_android_options(self):
         options = AppiumOptions()
-        options.platform_name = MobilePlatform.ANDROID.value
+        options.platform_name = MobilePlatform.ANDROID.appium_name
         options.set_capability("appium:automationName", "UIAutomator2")
         options.avd_launch_timeout = 3 * 60 * 1000
-        options.app = self.configs.app_name
-        options.platform_version = self.configs.device_platform_version
+        options.set_capability("appium:app", self.configs.app_name)
+        options.set_capability("appium:platformVersion", self.configs.device_platform_version)
 
         if not self.configs.is_cloud:
             options.udid = self.configs.device_udid
             options.app_package = self.configs.app_package_or_bundle_id
         else:
-            options.device_name = self.configs.device_name
+            options.set_capability("appium:deviceName", self.configs.device_name)
             options.set_capability("bstack:options", {
                 "userName": self.configs.cloud_username,
                 "accessKey": self.configs.cloud_access_key,

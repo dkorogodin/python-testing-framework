@@ -27,13 +27,12 @@ class XCUITestDriver(Driver):
 
     def _get_ios_options(self):
         options = AppiumOptions()
-        options.platform_name = MobilePlatform.IOS.value
+        options.platform_name = MobilePlatform.IOS.appium_name
         options.set_capability("appium:automationName", "XCUITest")
-
         options.simulator_startup_timeout = 3 * 60 * 1000
-        options.app = self.configs.app_name
-        options.device_name = self.configs.device_name
-        options.platform_version = self.configs.device_platform_version
+        options.set_capability("appium:app", self.configs.app_name)
+        options.set_capability("appium:deviceName", self.configs.device_name)
+        options.set_capability("appium:platformVersion", self.configs.device_platform_version)
 
         if not self.configs.is_cloud:
             wda_port = find_free_port(8201, 8299)

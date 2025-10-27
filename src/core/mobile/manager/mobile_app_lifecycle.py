@@ -86,7 +86,7 @@ class MobileAppLifecycle:
     # ------------------------------------------------
     def activate_app(self, app_id: str):
         """Activates the app. Skips for cloud iOS."""
-        if self.is_cloud and self.is_ios:
+        if self.is_cloud:
             logger.info("Cloud iOS — skipping activate_app (session already launched).")
             return
         logger.info(f"Activating app '{app_id}'.")
