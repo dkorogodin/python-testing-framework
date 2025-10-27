@@ -5,7 +5,7 @@ from pathlib import Path
 DATA_PATH = Path(__file__).resolve().parents[5] / "data/test_data/mobile/json"
 
 
-def invalid_login_credentials():
+def invalid_login_credentials() -> list[tuple[str, str]]:
     """Reads login-invalid-data.json and returns data as a list of tuples or dicts."""
     json_file = DATA_PATH / "login-invalid-data.json"
     with open(json_file, encoding="utf-8") as f:

@@ -61,7 +61,7 @@ class DeviceManager:
     # Location
     # ----------------------------
 
-    def get_location(self):
+    def get_location(self) -> dict[str, float] | None:
         """Returns the device location."""
         logger.info("Getting device location.")
         try:

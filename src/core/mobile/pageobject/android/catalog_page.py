@@ -26,7 +26,7 @@ class CatalogPage(BasePage):
         """Returns the page header text."""
         return self.element_actions.get_text(self.HEADER_LOC)
 
-    def tap_product_by_title(self, title: str):
+    def tap_product_by_title(self, title: str) -> ProductDetailsPage:
         """Taps the product with the specified title in the catalog."""
         self._scroll_until_product_found(title).click()
         return ProductDetailsPage(self.driver)
@@ -43,7 +43,7 @@ class CatalogPage(BasePage):
         """Returns an instance of CatalogPageAssertions for validations."""
         return CatalogPageAssertions(self)
 
-    def wait_until_page_loaded(self) -> None:
+    def wait_until_page_loaded(self):
         self.wait_until.element_visible(self.HEADER_LOC)
 
     def _scroll_until_product_found(self, title: str) -> WebElement:

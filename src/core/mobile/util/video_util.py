@@ -37,7 +37,7 @@ class VideoUtil:
         return None
 
     @staticmethod
-    def save_video_if_failed(driver, test_name: str, base64_data: Optional[str]):
+    def save_video_if_test_failed(driver, test_name: str, base64_data: Optional[str]):
         """Saves the Base64 video only if test failed."""
         if not base64_data:
             return

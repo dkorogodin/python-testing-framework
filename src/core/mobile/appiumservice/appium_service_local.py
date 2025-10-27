@@ -6,12 +6,15 @@ from typing import Optional
 import requests
 
 from src import logger
+from src.core.mobile.appiumservice.appium_service import AppiumService
 from src.core.util.system.port_util import find_free_port
 
 
-class AppiumServiceLocal:
+class AppiumServiceLocal(AppiumService):
+
     def __init__(self, node_path: str = "/opt/homebrew/bin/node",
                  appium_js_path: str = "/opt/homebrew/lib/node_modules/appium/build/lib/main.js"):
+        super().__init__()
         self.node_path = node_path
         self.appium_js_path = appium_js_path
         self.port = find_free_port(4723, 4800)
@@ -24,7 +27,21 @@ class AppiumServiceLocal:
         if not Path(self.appium_js_path).exists():
             raise RuntimeError(f"Appium JS not found at: {self.appium_js_path}")
 
-        self._start()
+        self.setup()
+
+    def setup(self):
+        logger.info(f"Starting local Appium server at {self.url}")
+        command = [
+            self.node_path, self.appium_js_path,
+            "--address", "127.0.0.1",
+            "--port", str(self.port),
+            "--session-override",
+            "--allow-insecure", "chromedriver_autodownload"
+        ]
+
+        # Launch Appium process
+        self.process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+        self._wait_until_server_ready()
 
     def shutdown(self):
         logger.info("Stopping local Appium service...")
@@ -39,23 +56,6 @@ class AppiumServiceLocal:
             self.process = None
         else:
             logger.warning("No Appium process to stop.")
-
-    def get_url(self) -> str:
-        return self.url
-
-    def _start(self):
-        logger.info(f"Starting local Appium server at {self.url}")
-        command = [
-            self.node_path, self.appium_js_path,
-            "--address", "127.0.0.1",
-            "--port", str(self.port),
-            "--session-override",
-            "--allow-insecure", "chromedriver_autodownload"
-        ]
-
-        # Launch Appium process
-        self.process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
-        self._wait_until_server_ready()
 
     def _wait_until_server_ready(self):
         # Wait for Appium server to be ready

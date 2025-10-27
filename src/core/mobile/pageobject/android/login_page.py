@@ -18,7 +18,7 @@ class LoginPage(BasePage):
     PASSWORD_ERROR_MSG_LOC = (AppiumBy.XPATH, '//*[@content-desc="Password-error-message"]/android.widget.TextView')
 
     @allure.step("Logging in to app with '{1}' username and '{2}' password.")
-    def login(self, username: str, password: str):
+    def login(self, username: str, password: str) -> "LoginPage":
         """Logs in using the provided credentials."""
         return (self.enter_username(username)
                 .enter_password(password)
@@ -29,17 +29,17 @@ class LoginPage(BasePage):
         self.login(username, password)
         return CatalogPage(self.driver)
 
-    def enter_username(self, username: str):
+    def enter_username(self, username: str) -> "LoginPage":
         """Enters the provided username."""
         self.element_actions.type_text(self.USERNAME_FLD_LOC, username)
         return self
 
-    def enter_password(self, password: str):
+    def enter_password(self, password: str) -> "LoginPage":
         """Enters the provided password."""
         self.element_actions.type_text(self.PASSWORD_FLD_LOC, password)
         return self
 
-    def tap_login_button(self):
+    def tap_login_button(self) -> "LoginPage":
         """Taps the login button."""
         self.element_actions.click(self.LOGIN_BTN_LOC)
         return self
@@ -60,5 +60,5 @@ class LoginPage(BasePage):
         """Returns an instance of LoginPageAssertions for validations."""
         return LoginPageAssertions(self)
 
-    def wait_until_page_loaded(self) -> None:
+    def wait_until_page_loaded(self):
         self.wait_until.element_visible(self.HEADER_LOC)

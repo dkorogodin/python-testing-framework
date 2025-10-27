@@ -2,30 +2,24 @@ from testcontainers.core.container import DockerContainer
 from testcontainers.core.waiting_utils import wait_for_logs
 
 from src import logger
+from src.core.mobile.appiumservice.appium_service import AppiumService
 
 
-class AppiumServiceTestContainer:
+class AppiumServiceTestContainer(AppiumService):
     _APPIUM_PORT = 4723
     _VNC_PORT = 5900
     _NOVNC_PORT = 6080
 
     def __init__(self, image="appium/appium:latest"):
+        super().__init__()
         self.container = (DockerContainer(image)
                           .with_exposed_ports(self._APPIUM_PORT, self._VNC_PORT, self._NOVNC_PORT)
                           .with_env("APPIUM_ALLOW_INSECURE", "chromedriver_autodownload")
                           .with_env("ENABLE_VNC", "true")
                           .with_env("ENABLE_NO_VNC", "true"))
-        self._start()
+        self.setup()
 
-    def shutdown(self):
-        logger.info(f"Stopping Appium test container at '{self.url}'")
-        self.container.stop()
-        logger.info("Appium container stopped.")
-
-    def get_url(self):
-        return self.url
-
-    def _start(self):
+    def setup(self):
         logger.info("Starting Appium container...")
 
         self.container.start()
@@ -38,4 +32,7 @@ class AppiumServiceTestContainer:
         novnc_port = self.container.get_exposed_port(self._NOVNC_PORT)
         logger.info(f"Appium test container started at '{self.url}'. noVNC: http://{host}:{novnc_port}")
 
-        return self.url
+    def shutdown(self):
+        logger.info(f"Stopping Appium test container at '{self.url}'")
+        self.container.stop()
+        logger.info("Appium container stopped.")

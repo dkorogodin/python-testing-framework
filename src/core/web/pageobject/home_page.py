@@ -37,7 +37,7 @@ class HomePage(WebBaseLoggedInPage):
         """Return HomePageAssertions instance for fluent assertions."""
         return HomePageAssertions(self)
 
-    def wait_until_page_loaded(self) -> None:
+    def wait_until_page_loaded(self):
         self.wait_until.element_visible(self.PRODUCTS_LIST_LOC)
 
     def _find_product(self, expected_product_name: str) -> WebElement:

@@ -8,7 +8,7 @@ class OrdersHistoryPage(WebBaseLoggedInPage):
     """Page object for the Orders History Page."""
     HEADER_LOC = (By.XPATH, "//h1[text()='Your Orders']")
 
-    def wait_until_page_loaded(self) -> None:
+    def wait_until_page_loaded(self):
         """Wait until the Orders History page is fully loaded."""
         logger.info("Waiting for Orders History page to load...")
         self.wait_until.element_visible(self.HEADER_LOC)

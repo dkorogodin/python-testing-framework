@@ -39,6 +39,6 @@ class LoginPage(WebBasePage):
         """Return assertions for the Login Page."""
         return LoginPageAssertions(self)
 
-    def wait_until_page_loaded(self) -> None:
+    def wait_until_page_loaded(self):
         """Wait until Login Page is loaded."""
         self.wait_until.element_visible(self.USER_EMAIL_FLD_LOC)

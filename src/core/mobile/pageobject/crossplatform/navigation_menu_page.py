@@ -27,6 +27,6 @@ class NavigationMenuPage(MobileBasePage):
         from src.core.mobile.pageobject.crossplatform.login_page import LoginPage
         return LoginPage(self.driver)
 
-    def wait_until_page_loaded(self) -> None:
+    def wait_until_page_loaded(self):
         locator = self._get_platform_locator(self.LOGIN_MENU_ITEM_LOC)
         self.wait_until.element_visible(locator)

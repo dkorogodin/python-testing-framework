@@ -17,5 +17,5 @@ class CatalogPage(BasePage):
         """Returns an instance of CatalogPageAssertions for validations."""
         return CatalogPageAssertions(self)
 
-    def wait_until_page_loaded(self) -> None:
+    def wait_until_page_loaded(self):
         self.wait_until.element_visible(self.PRODUCTS_LOC)

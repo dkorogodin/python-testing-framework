@@ -81,7 +81,7 @@ class ElementActions:
         logger.info(f"Getting text from element: {locator}")
         return self.wait_until.element_visible(locator).text
 
-    def get_location(self, locator: tuple[str, str]) -> Dict[str, int]:
+    def get_location(self, locator: tuple[str, str]) -> Dict[str, float]:
         logger.info(f"Getting location of element: {locator}")
         return self.wait_until.element_visible(locator).location
 

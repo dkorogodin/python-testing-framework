@@ -53,7 +53,7 @@ class WireMockService(ABC):
         self.stop_wiremock()
         logger.info("WireMock stopped.")
 
-    def get_url(self):
+    def get_url(self) -> str:
         return self.url
 
     def _collect_all_mock_services(self):

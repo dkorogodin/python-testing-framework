@@ -12,21 +12,29 @@ class UIAutomator2DriverGestures(MobileGestures):
     Android-specific gestures for UIAutomator2.
     """
 
-    def click(self, gesture: ClickGesture): return self.execute("clickGesture", gesture)
+    def click(self, gesture: ClickGesture) -> "UIAutomator2DriverGestures":
+        return self.execute("clickGesture", gesture)
 
-    def double_click(self, gesture: ClickGesture): return self.execute("doubleClickGesture", gesture)
+    def double_click(self, gesture: ClickGesture) -> "UIAutomator2DriverGestures":
+        return self.execute("doubleClickGesture", gesture)
 
-    def long_click(self, gesture: LongClickGesture): return self.execute("longClickGesture", gesture)
+    def long_click(self, gesture: LongClickGesture) -> "UIAutomator2DriverGestures":
+        return self.execute("longClickGesture", gesture)
 
-    def drag(self, gesture: DragGesture): return self.execute("dragGesture", gesture)
+    def drag(self, gesture: DragGesture) -> "UIAutomator2DriverGestures":
+        return self.execute("dragGesture", gesture)
 
-    def fling(self, gesture: FlingGesture): return self.execute("flingGesture", gesture)
+    def fling(self, gesture: FlingGesture) -> "UIAutomator2DriverGestures":
+        return self.execute("flingGesture", gesture)
 
-    def pinch_open(self, gesture: PinchGesture): return self.execute("pinchOpenGesture", gesture)
+    def pinch_open(self, gesture: PinchGesture) -> "UIAutomator2DriverGestures":
+        return self.execute("pinchOpenGesture", gesture)
 
-    def pinch_close(self, gesture: PinchGesture): return self.execute("pinchCloseGesture", gesture)
+    def pinch_close(self, gesture: PinchGesture) -> "UIAutomator2DriverGestures":
+        return self.execute("pinchCloseGesture", gesture)
 
-    def swipe(self, gesture: SwipeGesture): return self.execute("swipeGesture", gesture)
+    def swipe(self, gesture: SwipeGesture) -> "UIAutomator2DriverGestures":
+        return self.execute("swipeGesture", gesture)
 
     def can_scroll_more(self, gesture: SwipeGesture) -> bool:
         return bool(self.driver.execute_script("mobile: scrollGesture", gesture.get_supported_arguments()))

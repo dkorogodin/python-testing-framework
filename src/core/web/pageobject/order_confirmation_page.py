@@ -17,6 +17,6 @@ class OrderConfirmationPage(WebBaseLoggedInPage):
         self.element_actions.click(self.ORDERS_LINK_LOC)
         return OrdersHistoryPage(self.driver)
 
-    def wait_until_page_loaded(self) -> None:
+    def wait_until_page_loaded(self):
         """Wait until the page is fully loaded."""
         self.wait_until.element_visible(self.ORDERS_LINK_LOC)

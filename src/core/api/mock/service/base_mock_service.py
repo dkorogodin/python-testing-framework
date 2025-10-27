@@ -2,6 +2,7 @@ import base64
 import json
 from abc import ABC, abstractmethod
 from dataclasses import asdict, is_dataclass
+from typing import Any
 
 from pydantic import BaseModel
 from wiremock.constants import Config
@@ -66,7 +67,7 @@ class BaseMockService(ABC):
         token = base64.b64encode(f"{username}:{password}".encode()).decode()
         return f"Basic {token}"
 
-    def make_serializable(self, obj):
+    def make_serializable(self, obj: Any) -> Any:
         if isinstance(obj, BaseModel):
             return json.loads(obj.model_dump_json())
         elif is_dataclass(obj):

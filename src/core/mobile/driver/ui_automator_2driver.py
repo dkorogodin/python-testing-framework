@@ -8,6 +8,7 @@ from src.core.util.platformshared.driver import Driver
 
 
 class UIAutomator2Driver(Driver):
+
     def __init__(self, configs: MobileConfigs):
         self.configs = configs
 
@@ -24,7 +25,7 @@ class UIAutomator2Driver(Driver):
         logger.info(f"Appium WebDriver initiated, session id: {driver.session_id}")
         return driver
 
-    def _get_android_options(self):
+    def _get_android_options(self) -> AppiumOptions:
         options = AppiumOptions()
         options.platform_name = MobilePlatform.ANDROID.appium_name
         options.set_capability("appium:automationName", "UIAutomator2")

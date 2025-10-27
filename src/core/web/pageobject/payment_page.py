@@ -93,5 +93,5 @@ class PaymentPage(WebBaseLoggedInPage):
             f"Expected country '{country}' not selected."
         return self
 
-    def wait_until_page_loaded(self) -> None:
+    def wait_until_page_loaded(self):
         self.wait_until.element_clickable(self.PLACE_ORDER_BTN_LOC)

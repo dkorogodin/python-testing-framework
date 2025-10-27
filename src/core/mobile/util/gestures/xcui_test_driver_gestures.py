@@ -20,35 +20,44 @@ class XCUITestDriverGestures(MobileGestures):
     iOS-specific gestures for XCUITest.
     """
 
-    def tap(self, gesture: TapGesture): return self.execute("tap", gesture)
+    def tap(self, gesture: TapGesture) -> "XCUITestDriverGestures":
+        return self.execute("tap", gesture)
 
-    def double_tap(self, gesture: DoubleTapGesture): return self.execute("doubleTap", gesture)
+    def double_tap(self, gesture: DoubleTapGesture) -> "XCUITestDriverGestures":
+        return self.execute("doubleTap", gesture)
 
-    def touch_and_hold(self, gesture: TouchAndHoldGesture): return self.execute("touchAndHold", gesture)
+    def touch_and_hold(self, gesture: TouchAndHoldGesture) -> "XCUITestDriverGestures":
+        return self.execute("touchAndHold", gesture)
 
-    def two_finger_tap(self, gesture: TwoFingerTapGesture): return self.execute("twoFingerTap", gesture)
+    def two_finger_tap(self, gesture: TwoFingerTapGesture) -> "XCUITestDriverGestures":
+        return self.execute("twoFingerTap", gesture)
 
-    def drag_from_to_for_duration(self, gesture: DragFromToForDurationGesture):
+    def drag_from_to_for_duration(self, gesture: DragFromToForDurationGesture) -> "XCUITestDriverGestures":
         return self.execute("dragFromToForDuration", gesture)
 
-    def drag_from_to_with_velocity(self, gesture: DragFromToWithVelocity):
+    def drag_from_to_with_velocity(self, gesture: DragFromToWithVelocity) -> "XCUITestDriverGestures":
         return self.execute("dragFromToWithVelocity", gesture)
 
-    def rotate_element(self, gesture: RotateElementGesture): return self.execute("rotateElement", gesture)
+    def rotate_element(self, gesture: RotateElementGesture) -> "XCUITestDriverGestures":
+        return self.execute("rotateElement", gesture)
 
-    def tap_with_number_of_taps(self, gesture: TapWithNumberOfTapsGesture):
+    def tap_with_number_of_taps(self, gesture: TapWithNumberOfTapsGesture) -> "XCUITestDriverGestures":
         return self.execute("tapWithNumberOfTaps", gesture)
 
-    def force_press(self, gesture: ForcePressGesture): return self.execute("forcePress", gesture)
+    def force_press(self, gesture: ForcePressGesture) -> "XCUITestDriverGestures":
+        return self.execute("forcePress", gesture)
 
-    def scroll_to_element(self, gesture: ScrollToElementGesture):
+    def scroll_to_element(self, gesture: ScrollToElementGesture) -> "XCUITestDriverGestures":
         return self.execute("scrollToElement", gesture)
 
-    def swipe(self, gesture: SwipeGesture): return self.execute("swipe", gesture)
+    def swipe(self, gesture: SwipeGesture) -> "XCUITestDriverGestures":
+        return self.execute("swipe", gesture)
 
-    def scroll(self, gesture: ScrollGesture): return self.execute("scroll", gesture)
+    def scroll(self, gesture: ScrollGesture) -> "XCUITestDriverGestures":
+        return self.execute("scroll", gesture)
 
-    def select_picker_wheel_value(self, gesture: SelectPickerWheelValueGesture):
+    def select_picker_wheel_value(self, gesture: SelectPickerWheelValueGesture) -> "XCUITestDriverGestures":
         return self.execute("selectPickerWheelValue", gesture)
 
-    def pinch(self, gesture: PinchGesture): return self.execute("pinch", gesture)
+    def pinch(self, gesture: PinchGesture) -> "XCUITestDriverGestures":
+        return self.execute("pinch", gesture)

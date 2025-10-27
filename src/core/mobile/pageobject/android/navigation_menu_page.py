@@ -32,5 +32,5 @@ class NavigationMenuPage(MobileBasePage):
         from src.core.mobile.pageobject.android.login_page import LoginPage
         return LoginPage(self.driver)
 
-    def wait_until_page_loaded(self) -> None:
+    def wait_until_page_loaded(self):
         self.wait_until.element_visible(self.CATALOG_MENU_ITEM_LOC)

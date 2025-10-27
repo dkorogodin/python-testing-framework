@@ -46,7 +46,7 @@ class TopNavigationBar(WebBasePage):
         from src.core.web.pageobject.login_page import LoginPage
         return self._navigate(self.SIGN_OUT_BTN_LOC, LoginPage)
 
-    def wait_until_page_loaded(self) -> None:
+    def wait_until_page_loaded(self):
         """Wait until the Top Navigation Bar is loaded."""
         self.wait_until.element_clickable(self.HOME_BTN_LOC)
 

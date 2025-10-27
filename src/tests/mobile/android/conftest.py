@@ -33,7 +33,7 @@ def video_recorder(android_configs_manager, mobile_manager, request):
     if android_configs_manager.mobile_configs.recordVideo:
         base64_data = VideoUtil.stop_recording(driver)
         if rep_call and rep_call.failed:
-            VideoUtil.save_video_if_failed(driver, request.node.name, base64_data)
+            VideoUtil.save_video_if_test_failed(driver, request.node.name, base64_data)
 
 
 @pytest.fixture()

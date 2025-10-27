@@ -54,6 +54,6 @@ class CartPage(WebBaseLoggedInPage):
         """Returns assertions for the Cart Page."""
         return CartPageAssertions(self)
 
-    def wait_until_page_loaded(self) -> None:
+    def wait_until_page_loaded(self):
         """Wait until the Cart Page is loaded."""
         self.wait_until.element_visible(self.CHECKOUT_BTN_LOC)

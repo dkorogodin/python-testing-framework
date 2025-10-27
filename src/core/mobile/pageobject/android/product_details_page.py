@@ -23,5 +23,5 @@ class ProductDetailsPage(BasePage):
             description=self.element_actions.get_text(self.PRODUCT_DESCRIPTION_LOC)
         )
 
-    def wait_until_page_loaded(self) -> None:
+    def wait_until_page_loaded(self):
         self.wait_until.element_visible(self.HEADER_LOC)

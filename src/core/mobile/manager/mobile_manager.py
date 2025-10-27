@@ -1,5 +1,7 @@
 from typing import Optional
 
+from appium.webdriver.webdriver import WebDriver
+
 from src import logger
 from src.core.data.configs.mobile_configs import MobileConfigs
 from src.core.mobile.driver.driver_factory import DriverFactory
@@ -23,7 +25,7 @@ class MobileManager:
         self._app: Optional[MobileAppLifecycle] = None
         self._device: Optional[DeviceManager] = None
 
-    def get_driver(self):
+    def get_driver(self) -> WebDriver:
         """Returns the Appium WebDriver, initializing it if necessary."""
         if self._driver is None:
             self._driver = DriverFactory(self.configs).initiate_driver()

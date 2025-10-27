@@ -52,14 +52,14 @@ class LoginPage(BasePage):
     }
 
     @allure.step("Logging in to app with '{1}' username and '{2}' password.")
-    def login(self, username: str, password: str):
+    def login(self, username: str, password: str) -> "LoginPage":
         """Logs in using the provided credentials."""
         return (self.enter_username(username)
                 .enter_password(password)
                 .tap_login_button())
 
     @allure.step("Logging in to app with hardcoded user that app provided on the screen.")
-    def login_with_first_hardcoded_user(self):
+    def login_with_first_hardcoded_user(self) -> "LoginPage":
         """Logs in using the hardcoded user that app provided on the screen."""
         locator = self._get_platform_locator(self.FIRST_VALID_HARDCODED_USER_LOC)
         self.element_actions.click(locator)
@@ -73,19 +73,19 @@ class LoginPage(BasePage):
             self.login(username, password)
         return CatalogPage(self.driver)
 
-    def enter_username(self, username: str):
+    def enter_username(self, username: str) -> "LoginPage":
         """Enters the provided username."""
         locator = self._get_platform_locator(self.USERNAME_FLD_LOC)
         self.element_actions.type_text(locator, username)
         return self
 
-    def enter_password(self, password: str):
+    def enter_password(self, password: str) -> "LoginPage":
         """Enters the provided password."""
         locator = self._get_platform_locator(self.PASSWORD_FLD_LOC)
         self.element_actions.type_text(locator, password)
         return self
 
-    def tap_login_button(self):
+    def tap_login_button(self) -> "LoginPage":
         """Taps the login button."""
         locator = self._get_platform_locator(self.LOGIN_BTN_LOC)
         self.element_actions.click(locator)
@@ -110,6 +110,6 @@ class LoginPage(BasePage):
         """Returns an instance of LoginPageAssertions for validations."""
         return LoginPageAssertions(self)
 
-    def wait_until_page_loaded(self) -> None:
+    def wait_until_page_loaded(self):
         locator = self._get_platform_locator(self.HEADER_LOC)
         self.wait_until.element_visible(locator)

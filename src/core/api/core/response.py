@@ -1,6 +1,8 @@
 import json
 from typing import Any, Optional
 
+import requests
+
 from src import logger
 
 
@@ -11,7 +13,7 @@ class ApiResponse:
     All operations are logged via the central logger.
     """
 
-    def __init__(self, response):
+    def __init__(self, response: requests.Response):
         self.response = response
         logger.debug("ApiResponse initialized with status code: %s", self.response.status_code)
 

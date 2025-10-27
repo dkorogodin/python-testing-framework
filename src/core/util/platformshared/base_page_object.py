@@ -16,6 +16,6 @@ class BasePageObject(ABC):
         self.wait_until_page_loaded()
 
     @abstractmethod
-    def wait_until_page_loaded(self) -> None:
+    def wait_until_page_loaded(self):
         """Wait until the page is fully loaded."""
         pass

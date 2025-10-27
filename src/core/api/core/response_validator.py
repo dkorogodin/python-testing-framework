@@ -6,6 +6,7 @@ from deepdiff import DeepDiff
 from pydantic import BaseModel
 
 from src import logger
+from src.core.api.core.response import ApiResponse
 
 
 class ApiResponseValidator:
@@ -15,7 +16,7 @@ class ApiResponseValidator:
     Logs all validations via the central logger.
     """
 
-    def __init__(self, response):
+    def __init__(self, response: ApiResponse):
         self.response = response
         logger.debug(
             "ApiResponseValidator initialized for response with status %s",

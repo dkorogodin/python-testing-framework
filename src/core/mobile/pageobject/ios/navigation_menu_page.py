@@ -24,5 +24,5 @@ class NavigationMenuPage(MobileBasePage):
         from src.core.mobile.pageobject.ios.login_page import LoginPage
         return LoginPage(self.driver)
 
-    def wait_until_page_loaded(self) -> None:
+    def wait_until_page_loaded(self):
         self.wait_until.element_visible(self.LOGIN_MENU_ITEM_LOC)

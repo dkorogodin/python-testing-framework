@@ -25,7 +25,7 @@ class XCUITestDriver(Driver):
         logger.info(f"Appium WebDriver initiated, session id: {driver.session_id}")
         return driver
 
-    def _get_ios_options(self):
+    def _get_ios_options(self) -> AppiumOptions:
         options = AppiumOptions()
         options.platform_name = MobilePlatform.IOS.appium_name
         options.set_capability("appium:automationName", "XCUITest")

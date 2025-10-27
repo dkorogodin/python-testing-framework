@@ -1,5 +1,7 @@
 from typing import Optional, Set
 
+from appium.webdriver.webdriver import WebDriver
+
 from src import logger
 
 
@@ -10,7 +12,7 @@ class ContextActions:
     Supports switching between native app context and webview context.
     """
 
-    def __init__(self, driver):
+    def __init__(self, driver: WebDriver):
         self.driver = driver
 
     # ------------------------------------------------
@@ -60,7 +62,7 @@ class ContextActions:
     # ------------------------------------------------
     # Switch operations
     # ------------------------------------------------
-    def switch_to_context(self, context_name: str):
+    def switch_to_context(self, context_name: str) -> WebDriver | None:
         """
         Switches the driver to a specified context.
         Returns the driver in the new context, or None if switch failed.
@@ -73,10 +75,10 @@ class ContextActions:
             logger.warning(f"Could not switch to context '{context_name}': {e}")
             return None
 
-    def switch_to_webview_app(self):
+    def switch_to_webview_app(self) -> WebDriver | None:
         """Switches the driver to the WebView context."""
         return self.switch_to_context(self.get_webview_name())
 
-    def switch_to_native_app(self):
+    def switch_to_native_app(self) -> WebDriver | None:
         """Switches the driver to the Native app context."""
         return self.switch_to_context(self.get_native_view_name())
